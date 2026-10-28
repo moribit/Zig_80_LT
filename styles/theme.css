@@ -96,3 +96,10 @@
 .slidev-layout h2 { font-size:30px; line-height:1.5; margin:0 0 18px; }
 .slidev-layout .memory-bar>div { padding-left:0; }
 .slidev-layout .memory-bar>div span { margin-left:20px; }
+
+/* Wording revision: compact specifications within the existing photo grid. */
+.slidev-layout .spec-table { font-size:23px; line-height:1.35; margin:0; table-layout:fixed; }
+.slidev-layout .spec-table td,.slidev-layout .spec-table th { padding:4px 8px; }
+.slidev-layout .spec-table td:first-child,.slidev-layout .spec-table th:first-child { padding-left:0; width:160px; white-space:nowrap; }
+.slidev-layout .constraints { margin:18px 0; padding-left:28px; font-size:26px; line-height:1.7; }
+.slidev-layout .constraints li { padding-left:3px; margin:0 0 12px; }

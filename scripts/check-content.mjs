@@ -3,12 +3,20 @@ import assert from 'node:assert/strict';
 const deck=JSON.parse(await readFile('docs/deck.json','utf8'));
 const manifest=JSON.parse(await readFile('config/media.json','utf8'));
 const source=await readFile('slides.md','utf8');
+const outline=await readFile('outline.md','utf8');
 const notes=[...source.matchAll(/<!--([\s\S]*?)-->/g)].map(m=>m[1]);
 assert.equal(notes.length,deck.count,'speaker notes on every slide');
 for(const note of notes)for(const field of ['伝えること:','前からのつながり:','技術補足:','次への導入:','出典:'])assert.ok(note.includes(field),field);
 assert.equal((source.match(/<SlideFooter /g)||[]).length,deck.count);
 const chunks=source.split(/\n---\nlayout:/);
 assert.equal(chunks.length,deck.count);
+for(const [i,chunk] of chunks.entries()){
+ const heading=chunk.match(/^# (.+)$/m)?.[1].replace(/<br\s*\/?>/g,'');
+ assert.equal(heading,deck.slides[i].title,`slide ${i+1} title matches metadata`);
+ assert.ok(outline.includes(`| ${i+1} | ${heading} | ${deck.slides[i].purpose} |`),`slide ${i+1} outline`);
+ assert.ok(chunk.includes(`伝えること: ${deck.slides[i].purpose}`),`slide ${i+1} speaker purpose`);
+ assert.ok(chunk.includes(`:number="${i+1}"`),`slide ${i+1} footer order`);
+}
 for(const [key,item] of Object.entries(manifest)){
  assert.equal(chunks.filter(s=>s.includes(`asset="${key}"`)).length,1,`${key}: once`);
  assert.ok(chunks[item.slide-1].includes(`asset="${key}"`),`${key}: assigned slide`);
