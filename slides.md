@@ -123,7 +123,7 @@ layout: message
 class: short-message
 ---
 
-# とても大変。
+# 割りと大変
 
 <!--
 伝えること: 当時の編集と保存の操作負担を口頭で補足する。
@@ -160,7 +160,7 @@ layout: default
 layout: message
 ---
 
-# これで通信できたら、色々できそう！
+# これで通信できたら色々できそう！
 
 <!--
 伝えること: シリアル経由でMacとの接続とプログラム転送を考える。
@@ -216,7 +216,7 @@ layout: default
 layout: message
 ---
 
-# でも、どうやって受信する？
+# でも、どうやって<br>任意のプログラムを実行するか？
 
 <!--
 伝えること: 物理接続だけでは転送できず最初の受信プログラムが必要だと説明する。
@@ -235,6 +235,18 @@ PC-8001側に、シリアル通信で受信したデータをRAMへ配置する�
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
 -->
+
+---
+layout: message
+---
+
+# でも、どうやって受信する？
+
+---
+layout: message
+---
+
+# プログラムをロード・実行する仕組みが必要
 
 ---
 layout: default
