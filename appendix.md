@@ -100,33 +100,6 @@ layout: default
 hideInToc: true
 ---
 
-# Appendix：S10と8251
-
-<div class="photo-grid">
-  <div>
-    <p><strong>S10 / μPD8251</strong></p>
-    <p>TX：送信<br />RX：受信<br />GND：信号基準の共有</p>
-    <p class="small muted">TTLレベルの反転信号。<br />一般的なRS-232の電気条件とは区別。</p>
-  </div>
-  <MediaAsset asset="wiring" compact />
-</div>
-
-<SlideFooter :number="29" chapter="Appendix" />
-
-<!--
-伝えること: S10の論理信号と物理配線の区別を示す。
-前からのつながり: 前ページ「Appendix：詳細メモリマップ」の説明を受ける。
-技術補足: 公開資料のTTL反転信号に基づき実機条件を確認する。物理ピン番号、電圧、向きの推測図は作らない。UARTは8251。候補接続表と所有機の実測を区別する。
-次への導入: 次は「Appendix：UARTフレームと反転信号」。
-出典:
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
--->
-
----
-layout: default
-hideInToc: true
----
-
 # Appendix：UARTフレームと反転信号
 
 <UartFrame />

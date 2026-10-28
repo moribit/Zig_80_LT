@@ -240,23 +240,27 @@ layout: message
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 -->
-
 ---
 layout: default
 ---
 
-# MacとPC-8001を接続する
+# PC-8001(S10)とRaspberryPi Pico2
 
-<MediaAsset asset="connection" />
+<div class="photo-grid">
+  <div>
+    <p><strong>S10/Pico2</strong></p>
+    <p>TX/GPIO 0<br />RX/GPIO 1<br />GND：基準電位</p>
+  </div>
+  <MediaAsset asset="wiring" compact />
+</div>
 
 <SlideFooter :number="8" chapter="02 / 現代のビルドとデプロイ" />
 
 <!--
-伝えること: 接続全景の写真を見せる領域と構成図を分離する。
-前からのつながり: 可能性を考える段階から、実際に接続する機器の紹介へ進む。
-技術補足: connectionはMac・USBケーブル・Pico 2・PC-8001の接続全景を示す実機写真。未提供なのでプレースホルダー。wiringはAppendixのS10近接配線用と役割を分ける。配線があることだけで通信成功とは扱わず、詳細な障害と試験記録はAppendixで扱う。
-口頭補足: Macとの接続を考え、USBとシリアルの間をPico 2で橋渡しする構成へ進む。
-次への導入: 次は「MacとPC-8001の接続構成」。
+伝えること: S10の論理信号と物理配線の区別を示す。
+前からのつながり: 前ページ「Appendix：詳細メモリマップ」の説明を受ける。
+技術補足: 公開資料のTTL反転信号に基づき実機条件を確認する。物理ピン番号、電圧、向きの推測図は作らない。UARTは8251。候補接続表と所有機の実測を区別する。
+次への導入: 次は「Appendix：UARTフレームと反転信号」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 -->
