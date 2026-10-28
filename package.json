@@ -11,8 +11,10 @@
     "typecheck": "vue-tsc --noEmit",
     "preview": "node scripts/serve.mjs dist 4173",
     "preview:qa": "node scripts/serve.mjs dist-qa 4174",
-    "verify": "node scripts/verify.mjs",
-    "package": "node scripts/package.mjs"
+    "verify": "node scripts/check-content.mjs && node scripts/verify.mjs",
+    "package": "node scripts/package.mjs",
+    "check:content": "node scripts/check-content.mjs",
+    "review:pdf": "node scripts/review-pdf.mjs"
   },
   "dependencies": {
     "@slidev/cli": "53.0.0",
@@ -29,6 +31,7 @@
   },
   "overrides": {
     "dompurify": "^3.4.17",
-    "image-size": "^2.0.3"
+    "image-size": "^2.0.3",
+    "floating-vue": "5.2.2"
   }
 }

@@ -1,0 +1,1 @@
+<template><div class="uart-frame" role="img" aria-label="8N1の一文字は開始1bit、データ8bit、停止1bitの計10bit。反転UARTはアイドルLow。"><div class="frame-start">START<br><b>1bit</b></div><div v-for="n in 8" :key="n" class="frame-data">D{{ n-1 }}<br><b>1bit</b></div><div class="frame-stop">STOP<br><b>1bit</b></div></div><p class="small muted">各セルは1bit。信号波形ではなくフレーム構成の概念図。</p></template>

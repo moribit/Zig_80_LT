@@ -1,73 +1,111 @@
 # Zig_80 PC-8001 LT
 
-「47年前のPCでローカルLLMクライアントを動かしてみた」の独立したSlidevプロジェクト。
-本編は4枚のプロトタイプのみ。完成チャット画面・Gemma実機動画は後半まで公開しない。
+**47年前のPCでローカルLLMクライアントを動かしてみた**
 
-## 開発と出力
+Zig_80によるPC-8001実機開発を追う全33枚のSlidevプレゼンテーション。
+手入力、通信障害、ローダー、HELLOとORBITAL RINGS、入力、LLMクライアントの順に進む。
+完成したGemmaチャット画面・映像・サムネイルを見せる場所は31枚目のみ。
+実機写真・動画は未提供のため明示プレースホルダーを置いている。
 
-Node.js 22以上、npm、Chrome/Chromiumを使用。依存はpackage-lock.jsonで固定。
+## 開発と検証
+
+Node.js **22.12以上**、npm、現行Chrome/Chromiumを使用。依存はpackage-lock.jsonで固定。
+実機への送信操作やOllamaの起動はスライド制作には不要。
 
 ```sh
 npm ci
+# Chromeがなければ事前に実行
 npx playwright install chromium
-npm run dev
 npm run typecheck
+npm run check:content
+npm run dev
+```
+
+開発サーバーの `/presenter/1` では原稿のノートを参照できる。
+CHROME_PATHでブラウザ実行パスを指定可能。macOSではインストール済みChromeを優先する。
+
+```sh
 npm run build
-npm run preview
 npm run export
 npm run thumbnails
 npm run build:qa
-npm run preview:qa
 npm run verify
+npm run preview
 npm run package
 ```
 
-- `slides.md`: 本編4枚。ノートは各ページ末尾のHTMLコメント。
-- `outline.md`: 物語の構成と未制作の後半。Slidevにインポートしない。
-- `styles/theme.css`: 1100×618.75の16:9。本文26px、見出し42px、タイトル53px。色・余白を集約。
-- `layouts/code-focus.vue`: header/default/codeスロット。実コードは8〜14行程度を20px以上で表示。抜粋元・コミット・行範囲をノートへ記録。
-- `layouts/video-focus.vue`: 390px高の動画を中心に表示。
-- `components/HardwareTopology.vue`: 編集可能な論理図。物理配線図と混同しない。
-- `media-check.md`: 本編と分離した動画・コードの検証デッキ。Gemma映像は含まない。
-- `docs/facts.md`: 参照コミット、出典、実機確認範囲。
+verifyは専用のローカルサーバーを空きポートで一時起動して終了時に閉じる。previewの事前起動は不要。
+packageはbuild/exportを再実行し、生成フォルダーportable/を作り直す。
+生成物はGitに入れない。ソースと小さい検証MP4だけを管理する。
 
-## 画像・図・ノート
+## 構成
 
-実機写真は`public/photos/`、図の元データは`public/diagrams/`、動画は`public/videos/`。
-ファイル名は英小文字とハイフン。由来・撮影日・権利・用途を`docs/assets.md`へ追記する。
-写真はobject-fit:containを基本とし、実機の情報を切り落とさない。横4:3の写真領域を2枚目に確保。
-CRT演出は`.crt`を付けた小領域だけ。本文・写真・動画には適用せず、点滅や揺れは使わない。
-発表ノートは進行と出典を記載し、公開HTMLは`--without-notes`で除去する。
-フォントはnpm同梱のNoto Sans JPとIBM Plex Mono。CDN参照なし。ライセンスは依存パッケージ内にあり、配布時はscripts/package.mjsで同梱する。
+- `slides.md`: 本編33枚、全ページの5項目ノートと固定コミット出典。
+- `outline.md`: 5章の物語と各ページの目的。Slidevには読み込まない。
+- `docs/deck.json`: ページ数・章・タイトル・成果初出の検証用メタデータ。
+- `styles/theme.css`: 1100×618.75、16:9。本文26px、見出し42px、タイトル53pxの既存ダークテーマを拡張。
+- `layouts/code-focus.vue`, `layouts/video-focus.vue`: コードと動画の既存レイアウト。
+- `components/HardwareTopology.vue`: Mac→USB→Pico 2→S10→PCの論理図。物理配線図ではない。
+- `components/FlowDiagram.vue`, `UartFrame.vue`, `MemoryBudget.vue`: 編集可能な技術図。
+- `components/MediaAsset.vue` + `config/media.json`: 実機素材とページの対応。src=nullなら用途表示。
+- `media-check.md`: 本編と分離した合成動画・コードの検証デッキ。Gemma実機映像を含めない。
+- `docs/facts.md`: GitHub正本の確認、参照コミット、数字、実機とモデルの範囲。
+- `docs/assets.md`: 必要素材、予定ファイル、差し替え手順。
+- `docs/validation.md`: 実施結果と未検証部分。
 
-## 動画とオフライン発表
+## 素材・コード・ノート
 
-ローカルMP4 H.264 / yuv420p、音声が必要ならAAC。自動再生に依存しない。
-`SlidevVideo controls :autoplay="false"`を使い、手動で再生・一時停止。離席時の停止も確認する。
-PDFにはポスターを出し、動画名を明示する。PDF自体では動画を再生できないため独立MP4を配布する。
-検証用playback-check.mp4は移動パターンのみの合成素材。実機映像ではない。
-本番映像を提供後、終盤の動画スライドにだけ追加し、実際のファイルで全検証をやり直す。
+実機写真はpublic/photos/、MP4はpublic/videos/、図の元データはpublic/diagrams/。
+写真と動画はobject-fit:containで情報を切り落とさず表示する。撮影者・日付・公開許可・UI版を素材台帳へ記録。
+実物に似せたAI生成画像や疑似チャットを、実機の証拠として使わない。
 
-`dist/`は静的HTML一式。単一HTMLファイルではない。インターネット接続は不要だがローカルWebサーバーを使う。
-`file://`でindex.htmlを直接開かない。別PCへはポータブル配布物を丸ごとコピーする。
-Nodeを事前に入れ、`node serve.mjs dist 4173`で起動。Pythonがある場合は`python3 -m http.server 4173 --directory dist`も利用可能。
-本番は現行Chrome、投影先1920×1080、ブラウザ全画面を基本。発表者画面は`/presenter/1`。
-PDFを別途開いておく。PPTXでは再生可能な動画が保持されない前提で、本番形式にしない。
-PWAは現段階では不要。静的ローカルサーバーでオフライン動作させる（サービスワーカーのキャッシュに依存しない）。
+CRT演出は`.crt`を付けた小領域のみ。実機素材・本文には重ねず、点滅・揺れは使わない。
+コードは20px以上、必要な命令だけを引用。今回のHELLOは40/80文字モードのセル間隔部分4行。
+原文と注釈を区別し、抜粋元・コミット・範囲をノートへ記載する。
+ノートには伝えること・前からのつながり・技術補足・次への導入・出典の5項目。
+公開HTMLは--without-notesで除去。発表用にノートが必要ならソースでdevを起動する。
+フォントはnpm同梱のNoto Sans JP / IBM Plex MonoでCDN不要。ライセンスを配布物に含める。
+FloatingVueはTwoSlashが参照するOptions APIの内部構造との互換性を保つため5.2.2へ固定。console.errorを抑止する処理は入れず、全ページのconsole/pageerrorを検査する。
 
-## 視覚レビューと再現手順
+## 動画・PDF・オフライン
 
-1. build/export/thumbnailsを実行。本編が4枚、PDFが4ページ、PNGが4枚であることを確認。
-2. previewとpreview:qaを起動しverifyを実行。外部通信を遮断し、初回読み込み・全ページ遷移・動画の再生/停止とHTTP範囲取得を検証。
-3. `artifacts/browser/`の本編全4枚を原寸表示し、折返し、欠け、余白、色、図のラベルを確認。`artifacts/contact-sheet.html`は一覧用。
-4. PDFをレンダリングして全ページを目視比較。変更後は生成し直す。
-5. 本番PCでWi-Fiと有線を切り、localhostサーバーを起動。キャッシュなしで全ページ移動、動画の手動再生・停止・シーク、フルスクリーン、PDF代替を実施。
-6. 実機素材に差し替えたら再検証し、`docs/validation.md`へ環境・日付・結果を記録する。
+H.264 / yuv420pのローカルMP4、必要な音声はAAC。SlidevVideoのcontrolsを表示しautoplay=falseで手動再生・停止する。
+提供後はconfig/media.jsonに実ファイルと印刷用posterを指定する。差し替えはdocs/assets.md参照。
+PDFにはポスターと対応MP4名を表示する。未提供の予定MP4は実在する配布ファイルとして扱わない。
+現在のplayback-check.mp4は合成テストであり、本編には配置しない。
 
-Playwrightの検証は外部リクエストを遮断した状態とブラウザoffline状態（読み込み済み素材）の両方を確認する。
-OSネットワーク断や会場プロジェクターの検証を代替したとは扱わない。
+`dist/`は静的HTML一式。単一HTMLではない。インターネットやCDNに依存しないが、**ローカルWebサーバーが必要**。
+別PCではポータブル配布物を展開し、その中で次を実行する（Nodeは事前に用意）。
 
-## 配布
+```sh
+node serve.mjs dist 4173
+```
 
-`npm run package`でbuild・PDF出力後、`artifacts/zig80-lt-portable.tar.gz`へ`dist/`、PDF、独立MP4、起動スクリプト・手順を同梱。
-開発用ソースはこのリポジトリを配布。`node_modules/`やZig_80本体は同梱しない。
+Chromeで http://127.0.0.1:4173/1 を開く。file://で直接index.htmlを開かない。
+Pythonを使う場合は `python3 -m http.server 4173 --directory dist` でも通常ページを表示可能（SPAの深いURLはNodeサーバーを推奨）。
+本番は1920×1080・全画面表示。バックアップPDFも開いておく。
+PWAは不要。ローカルサーバー方式でオフライン表示でき、サービスワーカーのキャッシュに依存しない。
+PPTXで再生可能な動画が保持されない前提とし、本番形式には使わない。
+
+## 視覚レビュー
+
+1. build/export/thumbnailsを実行。PDF33ページ、PNG33枚を確認。
+2. build:qa/verifyで全ページの1920×1080スクリーンショットを生成。
+3. `artifacts/contact-sheet.html` または `artifacts/contact-sheet.png` で5章の流れを見る。`chapter-1.png`〜`chapter-5.png`も生成。
+4. `artifacts/browser/slide-N.png` を原寸で開き、全ページの折返し・余白・図・コード・素材領域を確認する。自動のはみ出し検査だけで見た目の合格としない。
+5. Popplerのpdftoppmがあれば `npm run review:pdf` でPDF全ページを画像化しブラウザ画像と差分比較する。`artifacts/pdf-review/`を開き、文字・図・プレースホルダーを目視確認する。差分の小ささだけで見た目の合格とはしない。
+6. 実機動画提供後は各実MP4で手動再生・停止・シーク、ページ離脱時の停止、PDFポスター、配布物内の独立MP4を再検証。
+7. 本番PCでWi-Fiと有線を切り、キャッシュなしの読み込み・全ページ移動・全画面・実MP4再生・PDF代替をリハーサルする。
+
+verifyは外部通信をブロックした初回表示と、context.setOffline(true)による読み込み済み合成動画の再生を確認する。
+OSネットワーク断・会場機器・未提供の実機MP4を検証済みとは扱わない。`artifacts/verification.json`に区別して記録する。
+
+## 配布物
+
+- `artifacts/zig80-lt-source.tar.gz`: 開発ソース、全ノート、資料、検証スクリプト。
+- `dist/`: 発表用静的HTML。ノートなし。
+- `artifacts/zig80-lt.pdf`: 33ページのバックアップPDF。
+- `artifacts/zig80-lt-portable.tar.gz`: dist、PDF、独立MP4（提供済みのみ）、media-index.json、起動手順・サーバー、ライセンス。
+
+実機動画の対応はHELLO=23、ORBITAL=24、Gemma=31。未提供状態はmedia-index.jsonにavailable=falseとして残す。
+GitHub正本: https://github.com/moribit/Zig_80 。この発表は独立リポジトリ https://github.com/moribit/Zig_80_LT で管理する。
