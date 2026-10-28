@@ -28,7 +28,7 @@ for(const [key,item] of Object.entries(manifest)){
 assert.equal(manifest.gemma.slide,deck.revealSlide);
 assert.equal(manifest.manual.slide,6);assert.equal(manifest.connection.slide,8);
 assert.ok(!deck.slides.some(s=>s.title==='今回の開発目標'));
-assert.deepEqual(deck.slides.filter(s=>s.messageOnly).map(s=>s.number),[5,7]);
+assert.deepEqual(deck.slides.filter(s=>s.messageOnly).map(s=>s.number),[5,7,10]);
 assert.ok(!source.includes('playback-check.mp4'),'synthetic QA movie excluded from main');
 assert.ok(!source.includes('appleuser634'),'canonical URLs in slide notes');
 

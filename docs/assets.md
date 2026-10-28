@@ -8,17 +8,17 @@
 | pc8001 | 2 | 初代本体・キーボード・CRTの全体。mkIIを代用しない | public/photos/pc8001.jpg | 未提供 |
 | manual | 6 | 初代PC-8001のマニュアルのシリアル通信説明箇所。表紙・版・該当ページを合わせて確認 | public/photos/manual.jpg | 未提供・版/ページ未確定 |
 | connection | 8 | Mac・USBケーブル・Pico 2・PC-8001が接続されている全景 | public/photos/connection.jpg | 未提供 |
-| typing | 10 | 機械語のMON入力と照合画面。旧333Bかmini100Bかを記録 | public/photos/typing.jpg | 未提供 |
-| wiring | 26 | S10とPico 2のコネクタの向き・配線先が分かる実物 | public/photos/wiring.jpg | 未提供 |
-| 検証ログ | 29–33 | USB単体HEALTH、連続通信失敗、成功時のログ画面 | public/photos/usb-check.png 等 | 画像未提供。文書・永続JSON記録から値を引用済み |
-| hello | 14 | HELLO全文が読める実機画面・実行映像 | public/videos/hello.mp4 | 写真・動画とも未提供 |
-| orbital | 15 | 2本のリングと終了表示 | public/videos/orbital.mp4 | 未提供 |
-| gemma | **22のみ** | PC側のキー入力と逐次応答。新旧UIの版を確認 | public/videos/gemma.mp4 | 未提供 |
+| typing | 11 | 機械語のMON入力と照合画面。旧333Bかmini100Bかを記録 | public/photos/typing.jpg | 未提供 |
+| wiring | 27 | S10とPico 2のコネクタの向き・配線先が分かる実物 | public/photos/wiring.jpg | 未提供 |
+| 検証ログ | 30–34 | USB単体HEALTH、連続通信失敗、成功時のログ画面 | public/photos/usb-check.png 等 | 画像未提供。文書・永続JSON記録から値を引用済み |
+| hello | 15 | HELLO全文が読める実機画面・実行映像 | public/videos/hello.mp4 | 写真・動画とも未提供 |
+| orbital | 16 | 2本のリングと終了表示 | public/videos/orbital.mp4 | 未提供 |
+| gemma | **23のみ** | PC側のキー入力と逐次応答。新旧UIの版を確認 | public/videos/gemma.mp4 | 未提供 |
 
 ## 置換する前に
 
 撮影者、日付、公開許可、対象の型番、UI版、コードサイズ/CRC、モデル名、尺、解像度、音声有無を台帳へ追記する。
-Gemmaは完成した画面を含むので、ポスターも22枚目以外へ置かない。旧UI映像なら1683B等の版を明記して新UIの証拠にしない。
+Gemmaは完成した画面を含むので、ポスターも23枚目以外へ置かない。旧UI映像なら1683B等の版を明記して新UIの証拠にしない。
 個人情報や私的な会話内容が写っていないか確認する。提供素材への加工は目的を記録する。
 
 ## 差し替え
@@ -47,19 +47,19 @@ Gemmaは完成した画面を含むので、ポスターも22枚目以外へ置�
 - `components/HardwareTopology.vue`, `FlowDiagram.vue`, `UartFrame.vue`, `MemoryBudget.vue`: ソースに基づく編集可能な概念図。写真や実配線図の代替ではない。
 - フォント: npm同梱Noto Sans JP/IBM Plex Mono。ライセンスを配布物に含める。
 
-ログの値を紹介する29–33枚は「記録の抜粋・要約」と表示。実際のログ画面のスクリーンショットに見せかけない。
+ログの値を紹介する30–34枚は「記録の抜粋・要約」と表示。実際のログ画面のスクリーンショットに見せかけない。
 
 ## 白背景版で追加した説明図
 
 CassetteFlowは当時の接続の概念、MemoryMapはソフトウェアの配置契約、
 KeyboardMatrix/VramMapはソースに基づくI/O説明図。実機写真・完成UIの代用品ではない。
-新しい写真・動画は追加していない。wiringの実物写真枠はAppendix26へ移動。
+新しい写真・動画は追加していない。wiringの実物写真枠はAppendix27へ移動。
 
 ## 導入用に追加した撮影素材
 
 - manual（6枚目）：発表者が参照したマニュアルの写真。該当箇所とともに表紙・正式名・版・対象機種・ページを記録する。PC-8001B/mkII等のページを初代所有機の資料として無条件に代用しない。
-- connection（8枚目）：Mac、USBケーブル、Pico 2、PC-8001を含む接続全景。チャットの完成画面を写し込まず、22枚目より前で成果を公開しない。
-- wiring（26枚目、既存）：S10とPicoの端子・方向を確認する近接写真。connectionの全景とは用途が異なる。
+- connection（8枚目）：Mac、USBケーブル、Pico 2、PC-8001を含む接続全景。チャットの完成画面を写し込まず、23枚目より前で成果を公開しない。
+- wiring（27枚目、既存）：S10とPicoの端子・方向を確認する近接写真。connectionの全景とは用途が異なる。
 
 manualの正式な冊子と掲載ページは未提供。現時点で照合できたのは、Zig_80文書での初代PC-8001 / S10 / 8251の技術関係。
 S10をマニュアルで見つけた経緯はユーザー提供情報であり、発見日や冊子の具体的な文言は捏造しない。
