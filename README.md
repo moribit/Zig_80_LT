@@ -2,10 +2,10 @@
 
 **47年前のPCでローカルLLMクライアントを動かしてみた**
 
-Webエンジニア向けに、Zig_80によるPC-8001実機開発を説明する全33枚のSlidevプレゼンテーション。
-手入力、通信障害、ローダー、HELLOとORBITAL RINGS、入力、LLMクライアントの順に進む。
+Webエンジニア向けに、Zig_80によるPC-8001実機開発を説明する本編21枚＋Appendix17枚（全38枚）のSlidevプレゼンテーション。
+当時のN-BASIC・カセット保存から、転送・デプロイ、実機成果、LLMクライアントへ進む。通信障害の詳細はAppendix。
 スライドは仕様・処理・条件・結果を提示し、開発経緯は発表者ノートで補足する。
-完成したGemmaチャット画面・映像・サムネイルを見せる場所は31枚目のみ。
+完成したGemmaチャット画面・映像・サムネイルを見せる場所は19枚目のみ。
 実機写真・動画は未提供のため明示プレースホルダーを置いている。
 
 ## 開発と検証
@@ -41,10 +41,10 @@ packageはbuild/exportを再実行し、生成フォルダーportable/を作り�
 
 ## 構成
 
-- `slides.md`: 本編33枚、全ページの5項目ノートと固定コミット出典。
-- `outline.md`: 5章の物語と各ページの目的。Slidevには読み込まない。
+- `slides.md`: 本編21枚とAppendix17枚、全ページの5項目ノートと固定コミット出典。
+- `outline.md`: 本編5章・Appendixと各ページの目的。Slidevには読み込まない。
 - `docs/deck.json`: ページ数・章・タイトル・成果初出の検証用メタデータ。
-- `styles/theme.css`: 1100×618.75、16:9。本文26px、見出し42px、タイトル53pxの既存ダークテーマを拡張。
+- `styles/theme.css`: 1100×618.75、16:9。本文26px、見出し42px、タイトル53pxの白背景・黒文字のテーマ。
 - `layouts/code-focus.vue`, `layouts/video-focus.vue`: コードと動画の既存レイアウト。
 - `components/HardwareTopology.vue`: Mac→USB→Pico 2→S10→PCの論理図。物理配線図ではない。
 - `components/FlowDiagram.vue`, `UartFrame.vue`, `MemoryBudget.vue`: 編集可能な技術図。
@@ -90,9 +90,9 @@ PPTXで再生可能な動画が保持されない前提とし、本番形式に�
 
 ## 視覚レビュー
 
-1. build/export/thumbnailsを実行。PDF33ページ、PNG33枚を確認。
+1. build/export/thumbnailsを実行。PDF38ページ、PNG38枚を確認。
 2. build:qa/verifyで全ページの1920×1080スクリーンショットを生成。
-3. `artifacts/contact-sheet.html` または `artifacts/contact-sheet.png` で5章の流れを見る。`chapter-1.png`〜`chapter-5.png`も生成。
+3. `artifacts/contact-sheet.html` または `artifacts/contact-sheet.png` で本編5章とAppendixの流れを見る。`chapter-1.png`〜`chapter-6.png`も生成。
 4. `artifacts/browser/slide-N.png` を原寸で開き、全ページの折返し・余白・図・コード・素材領域を確認する。自動のはみ出し検査だけで見た目の合格としない。
 5. Popplerのpdftoppmがあれば `npm run review:pdf` でPDF全ページを画像化しブラウザ画像と差分比較する。`artifacts/pdf-review/`を開き、文字・図・プレースホルダーを目視確認する。差分の小ささだけで見た目の合格とはしない。
 6. 実機動画提供後は各実MP4で手動再生・停止・シーク、ページ離脱時の停止、PDFポスター、配布物内の独立MP4を再検証。
@@ -105,8 +105,19 @@ OSネットワーク断・会場機器・未提供の実機MP4を検証済みと
 
 - `artifacts/zig80-lt-source.tar.gz`: 開発ソース、全ノート、資料、検証スクリプト。
 - `dist/`: 発表用静的HTML。ノートなし。
-- `artifacts/zig80-lt.pdf`: 33ページのバックアップPDF。
+- `artifacts/zig80-lt.pdf`: 38ページのバックアップPDF。
 - `artifacts/zig80-lt-portable.tar.gz`: dist、PDF、独立MP4（提供済みのみ）、media-index.json、起動手順・サーバー、ライセンス。
 
-実機動画の対応はHELLO=23、ORBITAL=24、Gemma=31。未提供状態はmedia-index.jsonにavailable=falseとして残す。
+実機動画の対応はHELLO=11、ORBITAL=12、Gemma=19。未提供状態はmedia-index.jsonにavailable=falseとして残す。
 GitHub正本: https://github.com/moribit/Zig_80 。この発表は独立リポジトリ https://github.com/moribit/Zig_80_LT で管理する。
+
+## 本編終了と質疑
+
+本編は21枚目のGitHubリンクで終了。通常の次ページ操作は21→22で停止する。
+Appendixは21枚目の索引リンク、目次、またはURL `/22`〜`/38` で選ぶ。
+発表者画面の次操作も同じ境界で停止する。PDF/サムネイルには全38枚を含む。
+22:メモリ、23–25:接続、26–30:障害と通信試験、31–32:導入とプロトコル、
+33–36:入力と描画、37:HTTP、38:実機記録。各ページの詳細はoutline.md。
+
+BASICとカセットの説明は当時の手法を示す教材例で、今回の実機保存の記録ではない。
+2KBはmemory profile v1の転送許可領域であり、PC本体のRAM容量やハード上限ではない。

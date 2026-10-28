@@ -1,12 +1,15 @@
 {
-  "count": 33,
-  "revealSlide": 31,
+  "count": 38,
+  "mainCount": 21,
+  "appendixStart": 22,
+  "revealSlide": 19,
   "chapters": {
-    "1": "プログラムを届けたい",
-    "2": "転送する仕組み",
-    "3": "ローダーがローダーを呼ぶ",
-    "4": "実機でコードを書く",
-    "5": "ローカルLLMと会話する"
+    "1": "1979年の開発環境",
+    "2": "現代のビルドとデプロイ",
+    "3": "実機アプリの成果",
+    "4": "LLMクライアントの設計",
+    "5": "デモとまとめ",
+    "6": "Appendix / 質疑用"
   },
   "slides": [
     {
@@ -17,195 +20,225 @@
     },
     {
       "number": 2,
-      "title": "NEC PC-8001 — ハードウェア仕様",
+      "title": "NEC PC-8001について",
       "chapter": 1,
-      "purpose": "PC-8001の機種仕様と実機開発の前提を一覧にする。"
+      "purpose": "初代PC-8001の仕様とN-BASIC搭載を紹介する。"
     },
     {
       "number": 3,
-      "title": "開発目標：Z80機械語を実機で実行する",
+      "title": "N-BASICでのプログラム開発",
       "chapter": 1,
-      "purpose": "Z80ソースから実機RAMへの配置・実行までの開発目標を示す。"
+      "purpose": "行番号でRAM上のプログラムを編集しLISTとRUNを使い分ける。"
     },
     {
       "number": 4,
-      "title": "課題：MacからPC-8001へのプログラム転送",
+      "title": "データレコーダーによる保存と読み込み",
       "chapter": 1,
-      "purpose": "転送前に受信コードのRAM配置が必要であることを示す。"
+      "purpose": "当時のBASIC保存を今回のシリアル転送と区別する。"
     },
     {
       "number": 5,
-      "title": "機械語モニターによる直接入力",
-      "chapter": 1,
-      "purpose": "モニターでの書込・読み返し・起動手順を示す。"
+      "title": "今回の開発目標",
+      "chapter": 2,
+      "purpose": "Mac上のソースから実機実行までの開発サイクルを示す。"
     },
     {
       "number": 6,
-      "title": "初期ローダー：333バイトの手入力",
+      "title": "最初は機械語を直接入力",
       "chapter": 2,
-      "purpose": "初期333 Bローダーの入力負担を数値で示す。"
+      "purpose": "最初の333B手入力と後の100B化を時系列で示す。"
     },
     {
       "number": 7,
-      "title": "課題：手入力では開発サイクルを回せない",
+      "title": "MacとPC-8001の接続構成",
       "chapter": 2,
-      "purpose": "手入力の反復を常駐とCLI転送で置き換える要件を示す。"
+      "purpose": "USBとシリアルをPico 2で橋渡しする役割を示す。"
     },
     {
       "number": 8,
-      "title": "PC-8001のS10シリアルインターフェース",
+      "title": "シリアルローダーの実装",
       "chapter": 2,
-      "purpose": "S10の送受信と電気的条件の区別を示す。"
+      "purpose": "PC側の受信プログラムでデプロイを可能にする。"
     },
     {
       "number": 9,
-      "title": "Raspberry Pi Pico 2によるUSB–UARTブリッジ",
+      "title": "Zig_80による開発・デプロイ",
       "chapter": 2,
-      "purpose": "USB–UARTブリッジの接続と信号方向を示す。"
+      "purpose": "実際のCLIでビルドから転送までの手順を示す。"
     },
     {
       "number": 10,
-      "title": "通信仕様：300bps / 8N1 / 反転UART",
+      "title": "実機で繰り返し実行する",
       "chapter": 2,
-      "purpose": "300bps・8N1・反転UARTと理論転送量を示す。"
+      "purpose": "常駐ローダーに戻ることで反復できる条件を示す。"
     },
     {
       "number": 11,
-      "title": "USB通信の停止と原因の切り分け",
-      "chapter": 2,
-      "purpose": "USB停止をPico単体へ切り分けた条件と観測値を示す。"
+      "title": "HELLOプログラム",
+      "chapter": 3,
+      "purpose": "44Bの表示プログラムと実機確認結果を示す。"
     },
     {
       "number": 12,
-      "title": "Watchdog再起動への対処",
-      "chapter": 2,
-      "purpose": "待機処理の変更とUSB単体試験の結果・限界を示す。"
+      "title": "ORBITAL RINGS",
+      "chapter": 3,
+      "purpose": "582Bの描画デモと実機確認結果を示す。"
     },
     {
       "number": 13,
-      "title": "連続256バイト通信でのフレーミングエラー",
-      "chapter": 2,
-      "purpose": "実機の連続返送で発生した受信エラーの条件を示す。"
+      "title": "入力・表示・通信を組み合わせる",
+      "chapter": 3,
+      "purpose": "チャット端末を構成する三つの入出力を示す。"
     },
     {
       "number": 14,
-      "title": "PIO受信タイミングの修正",
-      "chapter": 2,
-      "purpose": "PIOモデルでの再現条件、RX変更、検証結果を示す。"
+      "title": "PC-8001とローカルLLMの接続",
+      "chapter": 4,
+      "purpose": "機器とソフトウェアの責務を分ける。"
     },
     {
       "number": 15,
-      "title": "実機通信テスト：256バイト完全一致",
-      "chapter": 3,
-      "purpose": "実機256 B往復の一致と計測区間を示す。"
+      "title": "LLMクライアントの処理",
+      "chapter": 4,
+      "purpose": "質問とストリーミング回答のデータフローを示す。"
     },
     {
       "number": 16,
-      "title": "転送・RAM検証・実行・復帰",
-      "chapter": 3,
-      "purpose": "転送・RAM検証・実行・復帰の要求と状態を区別する。"
+      "title": "アプリ領域を2KBに制限した理由",
+      "chapter": 4,
+      "purpose": "2KBがハード上限ではなく転送プロファイルの設計制限だと説明する。"
     },
     {
       "number": 17,
-      "title": "3段階のブートストラップ",
-      "chapter": 3,
-      "purpose": "3段階の導入とサイズ・配置・検査方式を示す。"
+      "title": "2KBに収めたZ80アプリ",
+      "chapter": 4,
+      "purpose": "1743Bと211Bと94Bの配分を示す。"
     },
     {
       "number": 18,
-      "title": "初期ローダーを333Bから100Bに削減",
-      "chapter": 3,
-      "purpose": "333 Bから100 Bへ削減した入口と入力文字数を比較する。"
+      "title": "PC-8001のチャットUI",
+      "chapter": 4,
+      "purpose": "完成画面を見せず入力と表示の設計を説明する。"
     },
     {
       "number": 19,
-      "title": "Zig_80によるビルド・デプロイ",
-      "chapter": 3,
-      "purpose": "READMEとCLI実装に照合したビルド・デプロイ手順を示す。"
+      "title": "デモ：Gemmaとのチャット",
+      "chapter": 5,
+      "purpose": "このページで初めて完成チャット実機映像を公開する。"
     },
     {
       "number": 20,
-      "title": "常駐ローダーによる繰り返しデプロイ",
-      "chapter": 3,
-      "purpose": "常駐を保持した再デプロイの条件と制約を示す。"
+      "title": "実装結果と今後の課題",
+      "chapter": 5,
+      "purpose": "実装済みと新UIの未確認範囲を整理する。"
     },
     {
       "number": 21,
-      "title": "Zig_80のアーキテクチャと開発機能",
-      "chapter": 4,
-      "purpose": "アセンブラ・CPUモデル・CLI/TUI・実機デプロイの関係を示す。"
+      "title": "Zig_80 / GitHub",
+      "chapter": 5,
+      "purpose": "ソースへのリンクで本編を終え質疑用Appendixへ案内する。"
     },
     {
       "number": 22,
-      "title": "最初の実行結果：画面表示の不一致",
-      "chapter": 4,
-      "purpose": "表示不一致の原因を40/80文字モードのセル間隔で説明する。"
+      "title": "Appendix：詳細メモリマップ",
+      "chapter": 6,
+      "purpose": "CLEAR予約と転送許可範囲とABIを詳述する。"
     },
     {
       "number": 23,
-      "title": "HELLO — 44バイトのZ80プログラム",
-      "chapter": 4,
-      "purpose": "HELLOの実コードと実機確認結果を示す。"
+      "title": "Appendix：S10と8251",
+      "chapter": 6,
+      "purpose": "S10の論理信号と物理配線の区別を示す。"
     },
     {
       "number": 24,
-      "title": "ORBITAL RINGS — 582バイトの描画デモ",
-      "chapter": 4,
-      "purpose": "描画デモのサイズ・動作・実機確認範囲を示す。"
+      "title": "Appendix：UARTフレームと反転信号",
+      "chapter": 6,
+      "purpose": "8N1と反転極性と理論転送量を示す。"
     },
     {
       "number": 25,
-      "title": "キーボード入力と画面制御",
-      "chapter": 4,
-      "purpose": "キーボード走査から入力処理・画面更新・通信までを示す。"
+      "title": "Appendix：PIOによるUART実装",
+      "chapter": 6,
+      "purpose": "PicoのPIOとホスト接続の関係を示す。"
     },
     {
       "number": 26,
-      "title": "LLMクライアントの実装要件",
-      "chapter": 4,
-      "purpose": "LLMクライアントの入力・表示・通信・推論接続要件を示す。"
+      "title": "Appendix：USB停止の切り分け",
+      "chapter": 6,
+      "purpose": "USB単体での停止条件と観測値を示す。"
     },
     {
       "number": 27,
-      "title": "システム構成：PC-8001からOllamaまで",
-      "chapter": 5,
-      "purpose": "機器ごとの役割と質問・HTTP・逐次回答の時系列を示す。"
+      "title": "Appendix：Watchdog再起動への対処",
+      "chapter": 6,
+      "purpose": "待機処理変更と120秒の測定条件を示す。"
     },
     {
       "number": 28,
-      "title": "300bpsに合わせたストリーミング転送",
-      "chapter": 5,
-      "purpose": "チャンク送信と低速回線上のオーバーヘッドを示す。"
+      "title": "Appendix：連続通信エラーの再現",
+      "chapter": 6,
+      "purpose": "185B一致後のフレーミングエラーを示す。"
     },
     {
       "number": 29,
-      "title": "2KBのアプリ領域とメモリ配置",
-      "chapter": 5,
-      "purpose": "コード・作業領域・未割当を2 KB内で整合させる。"
+      "title": "Appendix：PIO受信タイミングの修正",
+      "chapter": 6,
+      "purpose": "モデルでの再現と40条件での改善を示す。"
     },
     {
       "number": 30,
-      "title": "実機テスト結果と検証範囲",
-      "chapter": 5,
-      "purpose": "旧UIと新UIの実機確認済み・未確認を分ける。"
+      "title": "Appendix：256B往復試験",
+      "chapter": 6,
+      "purpose": "256B往復一致と測定区間を示す。"
     },
     {
       "number": 31,
-      "title": "デモ：PC-8001からGemmaとチャット",
-      "chapter": 5,
-      "purpose": "31枚目だけに完成チャット実機映像の領域を置く。"
+      "title": "Appendix：ブートストラップの詳細",
+      "chapter": 6,
+      "purpose": "100Bの入口から常駐を導入するサイズと配置を示す。"
     },
     {
       "number": 32,
-      "title": "実装結果と今後の課題",
-      "chapter": 5,
-      "purpose": "実装済みの機能と未確認の実機試験を整理する。"
+      "title": "Appendix：CRC16・ACK・再送",
+      "chapter": 6,
+      "purpose": "ローダーとチャットの信頼性制御を区別する。"
     },
     {
       "number": 33,
-      "title": "Zig_80 — ソースコードと資料",
-      "chapter": 5,
-      "purpose": "ソースコードと発表資料の参照先を示す。"
+      "title": "Appendix：キーマトリクスと押下判定",
+      "chapter": 6,
+      "purpose": "I/O読取とactive-lowと立ち上がり抽出を実コードで説明する。"
+    },
+    {
+      "number": 34,
+      "title": "Appendix：文字変換と終了処理",
+      "chapter": 6,
+      "purpose": "SHIFT変換と入力遅延とESC/STOPの扱いを示す。"
+    },
+    {
+      "number": 35,
+      "title": "Appendix：VRAMと文字描画",
+      "chapter": 6,
+      "purpose": "行120Bの文字と属性を分け座標からの書込先を示す。"
+    },
+    {
+      "number": 36,
+      "title": "Appendix：40/80文字とカーソル",
+      "chapter": 6,
+      "purpose": "表示モードの読取と文字間隔とCRTC座標を説明する。"
+    },
+    {
+      "number": 37,
+      "title": "Appendix：HTTPとバックプレッシャー",
+      "chapter": 6,
+      "purpose": "HTTP逐次受信と低速UARTの流量制御を説明する。"
+    },
+    {
+      "number": 38,
+      "title": "Appendix：実機検証の詳細記録",
+      "chapter": 6,
+      "purpose": "新旧UIの成功範囲と未確認を区別する。"
     }
   ]
 }

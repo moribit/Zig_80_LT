@@ -25,4 +25,11 @@ for(const [key,item] of Object.entries(manifest)){
 assert.equal(manifest.gemma.slide,deck.revealSlide);
 assert.ok(!source.includes('playback-check.mp4'),'synthetic QA movie excluded from main');
 assert.ok(!source.includes('appleuser634'),'canonical URLs in slide notes');
+
+
+assert.equal(deck.mainCount + deck.slides.filter(s=>s.chapter===6).length,deck.count);
+assert.equal(deck.appendixStart,deck.mainCount+1);
+assert.ok(deck.revealSlide<deck.mainCount);
+const visibleMain=chunks.slice(0,deck.mainCount).map(s=>s.split('<!--')[0]).join('\n');
+assert.ok(!/Watchdog|watchdog|CRC|ACK|NAK|16 cycle/.test(visibleMain),'protocol details stay in appendix');
 console.log(`PASS: ${deck.count} slides, five-part notes, media mapping and final reveal`);

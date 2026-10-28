@@ -4,7 +4,7 @@ favicon: /favicon.svg
 title: 検証専用・本編に含めない
 aspectRatio: 16/9
 canvasWidth: 1100
-colorSchema: dark
+colorSchema: light
 fonts:
   provider: none
 layout: video-focus

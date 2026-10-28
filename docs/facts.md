@@ -160,3 +160,28 @@ Macのスリープ復帰でNOT_ARMEDとなった別の記録もある。回線�
 - CHAT_NEW: [docs/pc8001-validation-records/2026-10-27-chat-classic-014.json](https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json)
 - CHAT_IMPL: [src/serial/chat.zig](https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/src/serial/chat.zig)
 - CHAT_ASM: [examples/pc8001/chat.asm](https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/chat.asm)
+
+## 本編 / Appendix再編（2026-10-28）
+
+GitHubの最新HEADを再取得し、正本 `moribit/Zig_80` は引き続き
+`9c38139d018f787902dc4c4785b83ea4b3f14e3d`。本編21枚＋Appendix17枚。
+過去の数値・失敗記録は削除せずAppendixへ移動。旧ページ番号より `outline.md` / `config/media.json` を優先する。
+
+| 対象 | 照合した内容 | 根拠 |
+|---|---|---|
+| N-BASIC（3） | 行番号付きプログラムをRAMに保持、LISTは表示、RUNは実行。行番号で追加・置換、番号だけで削除 | NEC N-BASIC Reference Manual（PC-8001B版）1-1/1-12/1-13、LIST 2-32、RUN 2-59。パソコンミニ公式BASIC第5回の行番号削除例も照合 |
+| カセット（4） | CSAVE "HELLO" / CLOAD "HELLO"、BASICプログラムの保存/復元。独自教材例 | NEC PC-8001B User’s Manual PDF13頁（接続）、52–54頁（誌面47–49、CLOAD/CSAVE）。実機作業の記録とは区別 |
+| 2KBの理由（16/22） | D000–D7FFのみアプリ転送可。D800–DCFF常駐固定1280B、E400–E5FF中継、E600–E8FFバッファ・スタック・状態、E900以降保護 | docs/pc8001-memory-map.md と loader/layout.inc |
+| BASIC予約 | CLEAR 300,&HCFFF。成功とE400読書検証が開始条件。アプリ自身の破壊を防ぐ隔離ではない | 同メモリ文書。4/8KBは別プロファイルの調査が必要 |
+| チャットの配分（17） | 1743Bコード・テーブル等、211B静的領域、94B未割当。E700–E7FFのスタックは別領域 | docs/pc8001-chat.md、chat.asmのORG/定数と最新CLIの再アセンブル結果 |
+| キー（33/34） | ポート1〜9、active-low、(current XOR previous) AND current、SHIFT port8 bit6、ESC/STOP port9 bit0/7、BC1500 debounce | examples/pc8001/chat.asm key/key_row/key_table/key_debounce。docの非リピート仕様と照合 |
+| VRAM（35/36） | F300–FEB7、行120B=文字80B+属性40B。40文字はstride2、80文字はstride1 | chat.asm cell/putc/scroll/clear_row、hello.asm、memory-map、chat文書 |
+| スクロール/カーソル | 会話2–16行だけスクロール。属性1000Bを保持。CRTC command81hをport51h、X/Yをport50h、40文字Xは2倍 | chat.asm cursor_update/scroll と chat文書。完成UI画像はデモ19より前に置かない |
+| ストリーミング（15/37） | HTTP逐次受信、通常8B / LF / 100ms / DONEでflush。UART・ACK待ちはHTTP読出停止、未ACKバイト保持 | src/serial/chat_queue.zig、chat_ollama.zig、chat_protocol.zig、chat文書 |
+
+N-BASIC資料はNEC著・第三者保管の一次資料。BモデルのRAM32KB等は初代国内機の仕様へ転用しない。
+BASICコード例は説明用に作成し、実機で実行した証拠として扱わない。カセットで今回の機械語を保存したという主張もしない。
+
+- [NEC PC-8001B N-BASIC Reference Manual](https://archive.org/details/pc-8001b-n-basic-reference-manual-nec-en-1981)
+- [NEC PC-8001B User’s Manual](https://oldcrap.org/wp-content/uploads/2024/07/nec-pc8001b-users-manual.pdf)
+- [パソコンミニ公式：BASIC第5回](https://www.pcmini.jp/furoku/basic-05/index.html)

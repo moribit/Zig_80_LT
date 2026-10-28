@@ -1,4 +1,4 @@
- :root { --ink:#edf1ed; --muted:#a4b2ab; --green:#a9f68c; --bg:#111715; --line:#39463e; }
+ :root { --ink:#171717; --muted:#555555; --green:#2f7348; --bg:#ffffff; --line:#e5e7eb; }
 .slidev-layout { background:var(--bg); color:var(--ink); font-family:'Noto Sans JP Variable',sans-serif; padding:52px 60px; font-size:26px; line-height:1.65; letter-spacing:.015em; }
 .slidev-layout h1 { font-size:42px; font-weight:700; line-height:1.4; margin:0 0 32px; letter-spacing:-.025em; }
 .slidev-layout p { margin:0 0 20px; }
@@ -10,10 +10,10 @@
 .slidev-layout.cover { display:flex; flex-direction:column; justify-content:center; }
 .slidev-layout.cover h1 { font-size:53px; line-height:1.45; margin:0 0 30px; }
 .slidev-layout.cover .subtitle { font-size:23px; color:var(--muted); }
-.slidev-layout .crt { position:relative; color:var(--green); font-family:'IBM Plex Mono',monospace; text-shadow:0 0 12px #a9f68c26; }
+.slidev-layout .crt { position:relative; color:var(--green); font-family:'IBM Plex Mono',monospace; text-shadow:none; }
 .slidev-layout .crt:after { content:''; pointer-events:none; position:absolute; inset:0; background:repeating-linear-gradient(transparent 0 3px,#0002 3px 4px); opacity:.25; }
 .slidev-layout .photo-grid { display:grid; grid-template-columns: .85fr 1.3fr; gap:44px; align-items:center; }
-.slidev-layout .photo-placeholder { aspect-ratio:4/3; border:1px dashed #738479; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#18201b; text-align:center; font-size:24px; }
+.slidev-layout .photo-placeholder { aspect-ratio:4/3; border:1px dashed #738479; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f6f8f6; text-align:center; font-size:24px; }
 .slidev-layout .photo-placeholder span { margin-top:15px; color:var(--muted); font-size:17px; }
 .slidev-layout .story-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
 .slidev-layout .number { font:76px 'IBM Plex Mono'; color:var(--green); line-height:1.1; }
@@ -33,7 +33,7 @@
 @media print { .slidev-layout .crt:after { display:none; } .slidev-layout .crt { text-shadow:none; } }
 @media (prefers-reduced-motion:reduce) { *,*:before,*:after { animation:none!important; transition:none!important; } }
 
-/* Full-deck extensions: keep the original dark palette and 1100px canvas. */
+/* Full-deck extensions: white palette and 1100px canvas. */
 .slidev-layout { position:relative; }
 .slidev-layout p { line-height:1.6; }
 .slidev-layout h1 { max-width:980px; }
@@ -57,7 +57,7 @@
 .slidev-layout .flow-step b { display:block; font-size:27px; line-height:1.5; }
 .slidev-layout .flow-step span { display:block; font-size:19px; line-height:1.7; color:var(--muted); margin-top:14px; white-space:pre-line; }
 .slidev-layout .flow-arrow { display:flex; align-items:center; color:var(--green); font-size:30px; }
-.slidev-layout .asset-placeholder { height:350px; background:#18201b; border:1px dashed #738479; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; text-align:center; padding:24px; }
+.slidev-layout .asset-placeholder { height:350px; background:#f6f8f6; border:1px dashed #738479; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; text-align:center; padding:24px; }
 .slidev-layout .asset-placeholder b { font-size:29px; line-height:1.6; }
 .slidev-layout .asset-placeholder span { font-size:19px; color:var(--muted); line-height:1.7; max-width:700px; }
 .slidev-layout .asset-type { color:var(--green); font-size:18px; }
@@ -71,12 +71,12 @@
 .slidev-layout .uart-frame { display:flex; margin:35px 0 20px; }
 .slidev-layout .uart-frame>div { flex:1; text-align:center; font:16px/2 'IBM Plex Mono'; border:1px solid var(--line); padding:15px 0; }
 .slidev-layout .uart-frame b { font-size:32px; font-weight:400; }
-.slidev-layout .frame-start,.slidev-layout .frame-stop { color:var(--green); background:#202c22; }
+.slidev-layout .frame-start,.slidev-layout .frame-stop { color:var(--green); background:#e9f3ec; }
 .slidev-layout .memory-bar { display:flex; height:74px; gap:3px; margin:35px 0 25px; }
-.slidev-layout .memory-bar>div { display:flex; align-items:center; padding-left:20px; color:#111715; font:29px 'IBM Plex Mono'; }
+.slidev-layout .memory-bar>div { display:flex; align-items:center; padding-left:20px; color:#fff; font:29px 'IBM Plex Mono'; }
 .slidev-layout .memory-code { background:var(--green); }
-.slidev-layout .memory-work { background:#87b9cc; }
-.slidev-layout .memory-free { background:#45534a; }
+.slidev-layout .memory-work { background:#a8c7d3; }
+.slidev-layout .memory-free { background:#d9ddda; }
 .slidev-layout .memory-legend { display:flex; flex-wrap:wrap; column-gap:30px; }
 .slidev-layout .memory-legend p { font-size:21px; margin:0 0 14px; }
 .slidev-layout .memory-legend i { display:inline-block; width:15px; height:15px; margin-right:8px; }
@@ -84,7 +84,7 @@
 .slidev-layout .fact-table th { color:var(--muted); font-size:18px; font-weight:400; text-align:left; }
 .slidev-layout .fact-table td,.slidev-layout .fact-table th { padding:15px 12px; border-bottom:1px solid var(--line); }
 .slidev-layout .fact-table td:first-child,.slidev-layout .fact-table th:first-child { padding-left:0; }
-.slidev-layout .log-extract { font:21px/1.9 'IBM Plex Mono',monospace; padding:24px 28px; border-left:3px solid var(--green); background:#18201b; white-space:pre-wrap; }
+.slidev-layout .log-extract { font:21px/1.9 'IBM Plex Mono',monospace; padding:24px 28px; border-left:3px solid var(--green); background:#f6f8f6; white-space:pre-wrap; }
 .slidev-layout .caption { font-size:17px; line-height:1.6; color:var(--muted); margin-top:12px; }
 .slidev-layout .code-layout { grid-template-columns:minmax(0,1fr) minmax(0,1.3fr); }
 .slidev-layout .code-layout pre { margin-top:0; }
@@ -103,3 +103,12 @@
 .slidev-layout .spec-table td:first-child,.slidev-layout .spec-table th:first-child { padding-left:0; width:160px; white-space:nowrap; }
 .slidev-layout .constraints { margin:18px 0; padding-left:28px; font-size:26px; line-height:1.7; }
 .slidev-layout .constraints li { padding-left:3px; margin:0 0 12px; }
+
+/* White projection theme. No scanline overlay on body or diagrams. */
+.slidev-layout .crt:after { display:none; }
+.slidev-layout .memory-layout { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(0,1fr); gap:32px; align-items:start; }
+.slidev-layout .memory-layout p { font-size:24px; }
+.slidev-layout .memory-layout .small { font-size:17px; }
+.slidev-layout .detail { font-size:23px; line-height:1.7; }
+.slidev-layout .memory-work,.slidev-layout .memory-free { color:var(--ink); }
+.slidev-layout .shiki { background:#f6f8f6!important; color:#171717!important; }

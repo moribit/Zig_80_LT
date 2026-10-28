@@ -1,11 +1,14 @@
+<script setup lang="ts">
+defineProps<{ simple?: boolean }>()
+</script>
 <template>
   <div class="chat-sequence" role="img" aria-label="PC-8001の質問がPico 2経由でMacへ届き、MacがOllamaへHTTP接続。逐次応答を受信してPCへTEXTを返送する。">
     <div class="sequence-actors"><div><b>PC-8001</b><span>入力・表示</span></div><div><b>Pico 2</b><span>USB–UART</span></div><div><b>Mac</b><span>Zigホスト</span></div><div><b>Ollama</b><span>Gemma推論</span></div></div>
     <div class="sequence-row"><div class="sequence-message span-three to-right" style="grid-column:1/4">質問 / UART・USB</div></div>
     <div class="sequence-row"><div class="sequence-message span-two to-right" style="grid-column:3/5">HTTP POST /api/chat</div></div>
     <div class="sequence-row"><div class="sequence-message span-two to-left" style="grid-column:3/5">NDJSON stream</div></div>
-    <div class="sequence-row"><div class="sequence-message span-three to-left" style="grid-column:1/4">TEXT（CRC付き）</div></div>
-    <div class="sequence-row"><div class="sequence-message span-three to-right" style="grid-column:1/4">ACK</div></div>
+    <div class="sequence-row"><div class="sequence-message span-three to-left" style="grid-column:1/4">{{ simple ? '回答 / 通常8 Bずつ' : 'TEXT（CRC付き）' }}</div></div>
+    <div v-if="!simple" class="sequence-row"><div class="sequence-message span-three to-right" style="grid-column:1/4">ACK</div></div>
   </div>
 </template>
 <style scoped>

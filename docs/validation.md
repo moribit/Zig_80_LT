@@ -1,4 +1,68 @@
-# 全編スライド検証記録
+# 本編・Appendix再編の検証記録
+
+実施日: 2026-10-28。macOS arm64、Node.js 24.19.0、Slidev 53.0.0、Chrome 156。
+本編21枚＋Appendix17枚＝全38枚。16:9、1920×1080。写真・動画はすべて未提供のまま。
+
+## 内容・出典
+
+- outline / slides / deck.jsonの38件の見出し・目的・5項目ノートとページ順を機械照合。
+- 最新Zig_80 HEADは9c38139d018f787902dc4c4785b83ea4b3f14e3d。メモリ配置・入力・描画・通信を文書とソースで照合。
+- 最新CLIでchat.asmを/tmpへ再アセンブルし1743Bを再確認。静的211B＋未割当94Bと合わせ2048B。
+- BASICの独自教材例をNEC N-BASIC資料のLIST/RUN・行番号編集と照合。カセットはCSAVE/CLOADと論理接続を紹介し、今回の保存実績と区別。
+- 本編の本文からWatchdog、PIOタイミング、CRC/ACK/NAKを除外。詳細と既存の失敗記録・出典はAppendixに保持。
+- 完成チャット素材は19枚目のみ。18枚目は機能表で、完成画面・疑似画面を使わない。
+- 本編は21枚目で終了。通常の次キーと発表者画面の次操作は21→22で停止。索引リンク・直接URL・PDF出力は利用可能。
+
+## 最終検証
+
+最終実行結果は artifacts/verification.json / pdf-comparison.json に記録済み。
+型検査、内容検査、production build、PDF、全ページPNG、Playwright、PDF画像比較、ポータブル生成が成功。
+
+| 検査 | 最終結果 |
+|---|---|
+| 内容・型・production build | 成功。38ページの構成・全ノートと出典、短い実コード6か所を照合 |
+| 配布版HTML | portable/distを実際に配信し1920×1080で全38枚を確認 |
+| 白背景・黒本文 | 全ページで期待色を機械確認、図・コード・補助文字も目視レビュー |
+| レイアウト / エラー | はみ出し0、console.error 0、pageerror 0、HTTP失敗0 |
+| 外部ネットワーク | 初回表示から外部を遮断し、リクエスト0件 |
+| Appendix | 22–38の直接移動、21の索引リンク、通常/発表者画面での終了停止が成功 |
+| Gemma公開位置 | MediaAssetは19枚目だけ。全写真・動画のsrc/posterはnullのまま |
+| 動画（合成QAのみ） | 手動再生/停止、buffer済みoffline再生・シーク、離脱時停止、Range206が成功 |
+| PDF / PNG | 38ページ / 38枚。Poppler全ページ画像とブラウザ比較の最大平均RGB差3.252/255 |
+| 配布物 | HTML＋同一PDF＋独立動画索引＋起動手順、およびsetupを含む開発ソースを生成 |
+
+白背景#FFFFFF、本文#171717、補助#555555、アクセント#2F7348。コードも白背景に合わせた配色。
+全38枚のブラウザ画像とcontact sheetを目視レビューし、コード・図・写真枠・折り返しを確認済み。
+
+## 今回の表示調整
+
+- 3/4枚目: 教材コードと操作説明を分け、当時の方法と今回の作業を区別。
+- 16/22枚目: アドレス昇順の縦メモリマップ。高さは縮尺外と明記。
+- 21枚目: GitHubと質疑用索引を配置。通常進行の停止とリンク移動を検査。
+- 25/33–36枚目: 実コードを短く引用し、PIO・キー状態・VRAM・CRTCを白背景の図で補足。
+- 32枚目: 補足がフッターに近づいたため、重複説明をノートへ集約して余白を確保。
+
+## 未提供・未検証
+
+実機写真3点とHELLO/ORBITAL/GemmaのMP4は未提供。合成QAの再生成功を実機映像の成功と扱わない。
+ブラウザで外部通信を遮断し、読み込み済み合成MP4でoffline再生・停止・シークを確認済み。
+OSのWi-Fi/有線切断、別PC、会場機器、実機MP4の音声・尺は未検証。
+新UIの実機ESC復帰・次deploy・80文字・30分耐久は元リポジトリの未確認範囲を維持。
+
+## 生成物
+
+- dist/: ノートを除去した静的HTML（ローカルWebサーバーで起動）
+- artifacts/zig80-lt.pdf: 本編＋Appendixの全38ページ
+- artifacts/browser/slide-1.png〜slide-38.png、thumbnails/1.png〜38.png
+- artifacts/contact-sheet.html / contact-sheet.png、chapter-1.png〜chapter-6.png
+- artifacts/pdf-review/ と pdf-comparison.json: 全ページPDFレンダリングと比較
+- artifacts/zig80-lt-portable.tar.gz / zig80-lt-source.tar.gz
+
+以下は旧33枚版の履歴であり、ページ番号と色は現在版とは異なる。現在のページ対応はoutline / media.jsonを優先する。
+
+---
+
+# 以前の33枚版の検証履歴
 
 実施日: 2026-10-28。macOS arm64、Node.js 24.19.0、npm、Slidev 53.0.0、Chrome 156.0.8078.48。
 投影想定は16:9 / 1920×1080。ブラウザ検証は同寸のヘッドレスChrome。
