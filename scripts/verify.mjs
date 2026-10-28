@@ -41,6 +41,14 @@ try{
   layoutIssues.push(...issues.map(issue=>({slide:n,issue})));
   const colors=await slide.evaluate(root=>{const c=getComputedStyle(root);return [c.backgroundColor,c.color];});
   if(colors[0]!=='rgb(255, 255, 255)'||colors[1]!=='rgb(23, 23, 23)')contrastIssues.push({slide:n,colors});
+  if(deck.slides[n-1].messageOnly){
+   const text=await slide.innerText();
+   assert.equal(text.trim(),deck.slides[n-1].title,'message contains only its sentence');
+   assert.equal(await slide.locator('footer,figure,img,svg,video').count(),0,'no message decorations');
+   const geometry=await slide.evaluate(root=>{const r=root.getBoundingClientRect(),h=root.querySelector('h1'),b=h.getBoundingClientRect();return {dx:Math.abs((r.left+r.right-b.left-b.right)/2),dy:Math.abs((r.top+r.bottom-b.top-b.bottom)/2),font:parseFloat(getComputedStyle(h).fontSize),color:getComputedStyle(h).color};});
+   assert.ok(geometry.dx<3&&geometry.dy<3&&geometry.font>=50,'message centered and large');
+   assert.equal(geometry.color,'rgb(23, 23, 23)');
+  }
   const gemma=slide.locator('[data-asset="gemma"]');
   assert.equal(await gemma.count(),n===deck.revealSlide?1:0,'final chat only on its assigned slide');
  }
@@ -51,8 +59,8 @@ try{
   assert.equal(new URL(page.url()).pathname,`${prefix}/${deck.mainCount}`,'main ending stops normal advance');
  }
  await page.goto(`${mainOrigin}/${deck.mainCount}`,{waitUntil:'networkidle'});
- await page.getByRole('link',{name:'22 — メモリ',exact:true}).click();
- await page.waitForURL('**/22?appendix=1');
+ await page.getByRole('link',{name:`${deck.appendixStart} — メモリ`,exact:true}).click();
+ await page.waitForURL(`**/${deck.appendixStart}?appendix=1`);
  assert.ok(await page.locator('.slidev-page:visible h1').first().textContent(),'appendix link navigates');
  // All appendix URLs were independently rendered above; test returning to the ending.
  await page.goto(`${mainOrigin}/${deck.mainCount}`,{waitUntil:'networkidle'});

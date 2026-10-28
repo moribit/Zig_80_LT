@@ -185,3 +185,17 @@ BASICコード例は説明用に作成し、実機で実行した証拠として
 - [NEC PC-8001B N-BASIC Reference Manual](https://archive.org/details/pc-8001b-n-basic-reference-manual-nec-en-1981)
 - [NEC PC-8001B User’s Manual](https://oldcrap.org/wp-content/uploads/2024/07/nec-pc8001b-users-manual.pdf)
 - [パソコンミニ公式：BASIC第5回](https://www.pcmini.jp/furoku/basic-05/index.html)
+
+## 導入ストーリー再編（2026-10-28）
+
+本編24枚＋Appendix17枚（計41枚）。最新HEADを再照会し、参照コミットは引き続き `9c38139d018f787902dc4c4785b83ea4b3f14e3d`。
+「マニュアルでS10に着目した」という発表の経緯はユーザー提供情報。発見日・冊子名・版・ページは未提供。
+S10 / 8251 / シリアルの関係は初代対象の [serial-validation](https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md) の実機追記、調査境界、S10説明と照合した。
+同文書でもNEC原本回路との完全照合は未完了。PC-8001B資料を今回のマニュアル写真と同一視しない。
+manualの写真提供後、表紙・機種・版と該当箇所を確認してから差し替える。
+
+5/7の文言は発表上の所感・構想であり、定量測定や通信成功の記録ではない。
+4枚目のカセットは当時の方法の説明であり、今回の実機保存を行ったという意味には変えない。
+初期333B→mini100B、中継333B→常駐1134B/固定1280B、通信障害の時系列・測定条件・検証範囲を維持。
+既存Appendix17枚は順序・本文・コード・出典を保持し、旧22–38から新25–41へ移動。
+Gemma素材は22のみ、HELLOは14、ORBITALは15。本編終了24。ページ対応の正本はdeck.json / media.json / outline。

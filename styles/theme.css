@@ -112,3 +112,11 @@
 .slidev-layout .detail { font-size:23px; line-height:1.7; }
 .slidev-layout .memory-work,.slidev-layout .memory-free { color:var(--ink); }
 .slidev-layout .shiki { background:#f6f8f6!important; color:#171717!important; }
+
+/* Intro messages contain only the requested sentence. */
+.slidev-layout.message { display:flex; align-items:center; justify-content:center; text-align:center; }
+.slidev-layout.message h1 { font-size:50px; line-height:1.5; margin:0; max-width:none; white-space:nowrap; color:var(--ink); }
+.slidev-layout.message.short-message h1 { font-size:76px; }
+.slidev-layout .manual-grid { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:48px; align-items:center; }
+.slidev-layout .manual-labels p { font-size:34px; margin:0 0 24px; }
+.slidev-layout .manual-labels p:last-child { margin-bottom:0; }
