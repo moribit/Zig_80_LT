@@ -39,9 +39,9 @@ layout: cover
 layout: default
 ---
 
-# NEC PC-8001 — ハードウェア仕様
+# NEC PC-8001について
 
-<div class="photo-grid spec-grid"><div><table class="fact-table spec-table"><thead><tr><th>項目</th><th>仕様</th></tr></thead><tbody><tr><td>発売</td><td>1979年</td></tr><tr><td>CPU</td><td>NEC μPD780C-1<br>（Z80互換）</td></tr><tr><td>クロック</td><td>4 MHz</td></tr><tr><td>RAM</td><td>標準16 KB</td></tr><tr><td>ROM</td><td>24 KB / N-BASIC</td></tr><tr><td>テキスト表示</td><td>40/80文字 × 20/25行<br><span class="small muted">代表モード</span></td></tr><tr><td>シリアル通信</td><td>S10 / μPD8251</td></tr></tbody></table></div><MediaAsset asset="pc8001" compact /></div>
+<div class="photo-grid spec-grid"><div><table class="fact-table spec-table"><thead><tr><th>項目</th><th>仕様</th></tr></thead><tbody><tr><td>発売</td><td>1979年</td></tr><tr><td>CPU</td><td>μPD780C-1(Z80互換)</td></tr><tr><td>クロック</td><td>4 MHz</td></tr><tr><td>RAM</td><td>標準16 KB</td></tr><tr><td>ROM</td><td>24 KB / N-BASIC</td></tr><tr><td>テキスト表示</td><td>40/80文字 × 20/25行</td></tr><tr><td>シリアル通信</td><td>S10 / μPD8251</td></tr></tbody></table></div><MediaAsset asset="pc8001" compact /></div>
 
 <SlideFooter :number="2" chapter="01 / プログラムを届けたい" />
 
