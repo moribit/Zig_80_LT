@@ -120,3 +120,6 @@
 .slidev-layout .manual-grid { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:48px; align-items:center; }
 .slidev-layout .manual-labels p { font-size:34px; margin:0 0 24px; }
 .slidev-layout .manual-labels p:last-child { margin-bottom:0; }
+
+/* Keep the recorder commands and their existing Japanese annotations readable. */
+.slidev-layout .cassette-code pre code { white-space:pre-wrap; word-break:keep-all; overflow-wrap:normal; }

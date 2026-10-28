@@ -13,7 +13,7 @@
     "hint": "MON入力と全バイトの照合が分かる実機写真",
     "src": null,
     "poster": null,
-    "slide": 11
+    "slide": 13
   },
   "wiring": {
     "kind": "photo",
@@ -21,7 +21,7 @@
     "hint": "コネクタの向きと接続先を確認できる実物写真",
     "src": null,
     "poster": null,
-    "slide": 27
+    "slide": 29
   },
   "hello": {
     "kind": "video",
@@ -29,7 +29,7 @@
     "hint": "HELLO FROM ZIG_80の表示を撮影したMP4",
     "src": null,
     "poster": null,
-    "slide": 15
+    "slide": 17
   },
   "orbital": {
     "kind": "video",
@@ -37,7 +37,7 @@
     "hint": "2本のリングの動きと終了表示を撮影したMP4",
     "src": null,
     "poster": null,
-    "slide": 16
+    "slide": 18
   },
   "gemma": {
     "kind": "video",
@@ -45,7 +45,7 @@
     "hint": "PC側のキー入力と、返答が届く様子を撮影したMP4",
     "src": null,
     "poster": null,
-    "slide": 23
+    "slide": 22
   },
   "manual": {
     "kind": "photo",

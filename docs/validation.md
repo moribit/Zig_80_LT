@@ -1,3 +1,34 @@
+# Appendix分離・HTML整形の検証（2026-10-28）
+
+直近のユーザー編集時点の44枚を維持。本編25枚をslides.md、26–44の19枚をappendix.mdへ分離。
+slides.md末尾のsrcで読み込み、外部ファイル展開後の順序をSlidev公式パーサーで検査する。
+既存の44見出し・引用コードフェンス・出典URLを保持。未記入だったメッセージ4枚のノートを補完。
+フッター・素材台帳・索引・outline/deck.jsonを実際の順序に同期。Gemma素材は現行の22のみ、本編終了25。
+
+## 実施結果
+
+| 検査 | 結果 |
+|---|---|
+| format / format:check | 成功。2ファイルの再整形が冪等。HTMLは2スペース、コードとノートは対象外 |
+| 内容検査 | 25＋19＝44枚、全ノート、8素材、Appendixファイル・hideInToc・フッターが整合 |
+| 型検査・production build | 成功 |
+| PDF / PNG | 44ページ / 44枚。Appendixを含めて出力 |
+| ブラウザ | portable/distをChrome156 / 1920×1080で全44枚撮影・章別一覧をレビュー |
+| エラー・外部通信・はみ出し | pageerror/console.error/HTTP失敗/外部リクエスト/レイアウト/基本色の不一致すべて0 |
+| 発表進行 | 通常・発表者画面で本編25→26は停止。索引リンク、26–44の直接移動成功 |
+| 合成QA動画 | 手動再生/停止、buffer済みoffline再生/シーク、離脱時停止、Range206成功 |
+| PDF比較 | Popplerで全44ページを画像化。ブラウザとの差の最大平均RGB差3.253/255 |
+| ポータブル | HTML/PDF/動画索引/起動手順を生成。開発ソースにはappendix.mdと整形設定・スクリプトを同梱 |
+
+HTMLの整形では、フェンス後のHTMLがCommonMarkのインデント付きコードへ変換されないよう、その開始タグを行頭へ戻す。
+4枚目の既存の長いコード注釈は文字を変えず枠内で折り返す。再生する実機MP4は未提供、素材は引き続きプレースホルダー。
+OSネットワーク断・会場環境・実機動画は未検証。合成QAの成功と区別する。
+証跡: artifacts/verification.json、pdf-comparison.json、contact-sheet.png、browser/、pdf-review/。
+
+以下は過去版の検証履歴。現行ページ対応はoutline / deck.json / media.jsonを優先する。
+
+---
+
 # メッセージ10枚目追加の検証（2026-10-28）
 
 本編25枚＋Appendix17枚＝全42枚。Gemma専用素材23、本編終了25、Appendix26–42。

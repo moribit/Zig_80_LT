@@ -1,0 +1,15 @@
+{
+  "printWidth": 100,
+  "tabWidth": 2,
+  "proseWrap": "preserve",
+  "htmlWhitespaceSensitivity": "css",
+  "overrides": [
+    {
+      "files": ["slides.md", "appendix.md"],
+      "options": {
+        "parser": "slidev",
+        "plugins": ["prettier-plugin-slidev"]
+      }
+    }
+  ]
+}

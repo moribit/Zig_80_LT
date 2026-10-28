@@ -43,7 +43,7 @@ try{
   if(colors[0]!=='rgb(255, 255, 255)'||colors[1]!=='rgb(23, 23, 23)')contrastIssues.push({slide:n,colors});
   if(deck.slides[n-1].messageOnly){
    const text=await slide.innerText();
-   assert.equal(text.trim(),deck.slides[n-1].title,'message contains only its sentence');
+   assert.equal(text.replace(/\s/g,''),deck.slides[n-1].title.replace(/\s/g,''),'message contains only its sentence');
    assert.equal(await slide.locator('footer,figure,img,svg,video').count(),0,'no message decorations');
    const geometry=await slide.evaluate(root=>{const r=root.getBoundingClientRect(),h=root.querySelector('h1'),b=h.getBoundingClientRect();return {dx:Math.abs((r.left+r.right-b.left-b.right)/2),dy:Math.abs((r.top+r.bottom-b.top-b.bottom)/2),font:parseFloat(getComputedStyle(h).fontSize),color:getComputedStyle(h).color};});
    assert.ok(geometry.dx<3&&geometry.dy<3&&geometry.font>=50,'message centered and large');

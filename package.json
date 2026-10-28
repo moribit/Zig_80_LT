@@ -14,7 +14,9 @@
     "verify": "node scripts/check-content.mjs && node scripts/verify.mjs",
     "package": "node scripts/package.mjs",
     "check:content": "node scripts/check-content.mjs",
-    "review:pdf": "node scripts/review-pdf.mjs"
+    "review:pdf": "node scripts/review-pdf.mjs",
+    "format": "node scripts/format-slides.mjs",
+    "format:check": "node scripts/format-slides.mjs --check"
   },
   "dependencies": {
     "@slidev/cli": "53.0.0",
@@ -22,12 +24,14 @@
     "vue": "^3.5.0"
   },
   "devDependencies": {
-    "typescript": "^5.9.0",
-    "vue-tsc": "^3.1.0",
-    "playwright-chromium": "^1.56.0",
     "@fontsource-variable/noto-sans-jp": "^5.2.0",
     "@fontsource/ibm-plex-mono": "^5.2.0",
-    "@types/node": "^24.0.0"
+    "@types/node": "^24.0.0",
+    "playwright-chromium": "^1.56.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-slidev": "1.0.5",
+    "typescript": "^5.9.0",
+    "vue-tsc": "^3.1.0"
   },
   "overrides": {
     "dompurify": "^3.4.17",
