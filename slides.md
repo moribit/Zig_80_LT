@@ -71,12 +71,12 @@ layout: default
 
 ```text
 10 PRINT "HELLO"
-20 END
+20 GOTO 10
 LIST
 RUN
 ```
 
-<p class="caption">教材用コード例。実機での実演記録ではない。</p></div><div><h2>行番号で更新</h2><p><code>15 PRINT "PC-8001"</code>：追加<br><code>10 PRINT "HELLO!"</code>：置換<br><code>15</code>：その行を削除</p><p><strong>LIST</strong>：ソースを表示<br><strong>RUN</strong>：RAM上のコードを実行</p></div></div><p class="takeaway">ソースファイルを開く代わりに、メモリ上の行を直接更新する。</p>
+</div><div><h2>行番号で更新</h2><p><code>15 PRINT "PC-8001"</code>：追加<br><code>10 PRINT "HELLO!"</code>：上書き<br><code>15</code>：その行を削除</p><p><strong>LIST</strong>：ソースを表示<br><strong>RUN</strong>：RAM上のコードを実行</p></div></div><p class="takeaway">ソースファイルを開く代わりに、メモリ上の行を直接更新する。</p>
 
 <SlideFooter :number="3" chapter="01 / 1979年の開発環境" />
 
@@ -99,11 +99,11 @@ layout: default
 <CassetteFlow /><div class="split"><div>
 
 ```text
-CSAVE "HELLO"
-CLOAD "HELLO"
+CSAVE "HELLO" //テープへ"HELLO"で保存
+CLOAD "HELLO" //テープの"HELLO"をロード
 ```
 
-</div><div><p><strong>CSAVE</strong>：RAM → テープ<br><strong>CLOAD</strong>：テープ → RAM</p><p class="muted">電源断で消えるプログラムを保存。</p></div></div><p class="caption">当時のBASICプログラム保存の説明。今回カセット保存は実施していない。<br>機械語のカセットロードとは別の手順。</p>
+</div><div><p><strong>CSAVE</strong>：RAM → テープ<br><strong>CLOAD</strong>：テープ → RAM</p><p class="muted">電源断で消えるプログラムを保存。</p></div></div>
 
 <SlideFooter :number="4" chapter="01 / 1979年の開発環境" />
 
@@ -240,33 +240,7 @@ PC-8001側に、シリアル通信で受信したデータをRAMへ配置する�
 layout: message
 ---
 
-# でも、どうやって受信する？
-
----
-layout: message
----
-
 # プログラムをロード・実行する仕組みが必要
-
----
-layout: default
----
-
-# 最初は機械語を直接入力
-
-<div class="photo-grid"><div><p>初期ローダー：<strong>333 B</strong></p><p>Sコマンドで16進数を書き込み、Dコマンドで読み返す。</p><p class="muted">後に、手入力部分を<br>100 Bへ縮小。</p><p class="small muted">詳細：Appendix 35</p></div><MediaAsset asset="typing" compact /></div>
-
-<SlideFooter :number="11" chapter="02 / 現代のビルドとデプロイ" />
-
-<!--
-伝えること: 最初の333B手入力と後の100B化を時系列で示す。
-前からのつながり: 受信プログラム自体を転送できないため、最初の入口を機械語モニターから手入力する。
-技術補足: NECモニターSで変更しDで表示する。具体的なMON画面は素材未提供。所要時間やミス回数は記録がないため記載しない。当初333Bを手入力したことは今回のユーザー提供の開発経緯。文字数は最新文書の従来経路の計算値。MONコード入力のみ813文字、全工程883。BASICのファイルサイズ1420Bと総入力1406文字を混同しない。333BはE400–E54C。後に中継へ再利用する。100Bの入口を追加し333Bコードは変更せず再利用。mini MONコード入力のみ249文字、全工程319文字。BASIC mini7行/757文字。CLEAR/WIDTH、D全バイト確認、DEFUSR/USR、RETURN/CTRL+Bを含む集計。入力時間の実測ではない。小型化は前の通信検証と並行し、後から着手したと断定しない。
-次への導入: 次は「シリアルローダーの実装」。
-出典:
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
--->
 
 ---
 layout: default
@@ -287,6 +261,26 @@ layout: default
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-memory-map.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/loader/layout.inc
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
+-->
+
+---
+layout: default
+---
+
+# 最初は機械語を直接入力
+
+<div class="photo-grid"><div><p>初期ローダー：<strong>100B</strong></p><p>Sコマンドで16進数を書き込み、Dコマンドで読み返す。</p><p class="small muted">詳細：Appendix 35</p></div><MediaAsset asset="typing" compact /></div>
+
+<SlideFooter :number="11" chapter="02 / 現代のビルドとデプロイ" />
+
+<!--
+伝えること: 最初の333B手入力と後の100B化を時系列で示す。
+前からのつながり: 受信プログラム自体を転送できないため、最初の入口を機械語モニターから手入力する。
+技術補足: NECモニターSで変更しDで表示する。具体的なMON画面は素材未提供。所要時間やミス回数は記録がないため記載しない。当初333Bを手入力したことは今回のユーザー提供の開発経緯。文字数は最新文書の従来経路の計算値。MONコード入力のみ813文字、全工程883。BASICのファイルサイズ1420Bと総入力1406文字を混同しない。333BはE400–E54C。後に中継へ再利用する。100Bの入口を追加し333Bコードは変更せず再利用。mini MONコード入力のみ249文字、全工程319文字。BASIC mini7行/757文字。CLEAR/WIDTH、D全バイト確認、DEFUSR/USR、RETURN/CTRL+Bを含む集計。入力時間の実測ではない。小型化は前の通信検証と並行し、後から着手したと断定しない。
+次への導入: 次は「シリアルローダーの実装」。
+出典:
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
 -->
 
@@ -333,7 +327,7 @@ layout: default
 
 # 実機で繰り返し実行する
 
-<FlowDiagram :items="[{'title': 'アプリA', 'text': '転送・検証・実行'}, {'title': 'RET', 'text': '常駐ローダー待機'}, {'title': 'アプリB', 'text': '再転送・検証・実行'}]" /><ul class="constraints"><li>常駐コードとスタックを保持している間は、手入力・USR不要。</li><li>電源断・RESET後は再導入。</li><li>アプリがローダーやスタックを破壊した場合の復帰は保証しない。</li></ul>
+<FlowDiagram :items="[{'title': 'アプリA', 'text': '転送・検証・実行'}, {'title': 'RET', 'text': '常駐ローダー待機'}, {'title': 'アプリB', 'text': '再転送・検証・実行'}]" /><ul class="constraints"><li>常駐コードとスタックを保持している間は、手入力・USR不要。</li><li>電源断・RESET後は再導入。</li><li>アプリがローダーやスタックを破壊する可能性はある。</li></ul>
 
 <SlideFooter :number="14" chapter="02 / 現代のビルドとデプロイ" />
 
@@ -347,6 +341,11 @@ layout: default
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-memory-map.md
 -->
+---
+layout: message
+---
+
+# まずはHELLOを表示してみる
 
 ---
 layout: default
@@ -398,28 +397,16 @@ layout: default
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/orbital_rings.asm
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-26-orbital-rings-014.json
 -->
-
 ---
-layout: default
+layout: message
 ---
 
-# 入力・表示・通信を組み合わせる
+# プログラムの転送以外に<br>アプリでもシリアル通信が使えると楽しそう
+---
+layout: message
+---
 
-<FlowDiagram :items='[{"title": "入力", "text": "キー → 文字列\n編集・Return送信"}, {"title": "表示", "text": "文字列 → 画面\n入力欄・会話の更新"}, {"title": "通信", "text": "質問を送信\n回答を受信"}]' /><p>PC-8001側は、入力・表示・シリアル通信を担当。</p><p class="muted">LLM推論と会話履歴はMac側へ分離する。</p>
-
-<SlideFooter :number="17" chapter="03 / 実機アプリの成果" />
-
-<!--
-伝えること: チャット端末を構成する三つの入出力を示す。
-前からのつながり: 画面出力に入力と通信を組み合わせることで、対話するアプリを構成できる。
-技術補足: Mini Invaders1361Bの左右/SPACE動作を実機確認。ESC等はモデル検証と分ける。チャットはROMや割り込みに頼らずactive-lowキーマトリクスを直接走査し、Shift、削除、64B入力を扱う。完成UIの画像はまだ出さない。
-次への導入: 次は「PC-8001とローカルLLMの接続」。
-出典:
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-invaders.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/chat.asm
--->
-
+# チャットができるようにしてみよう
 ---
 layout: default
 ---
@@ -443,28 +430,90 @@ layout: default
 -->
 
 ---
+layout: video-focus
+---
+
+# デモ：Gemmaとのチャット
+
+<MediaAsset asset="gemma" />
+
+<SlideFooter :number="23" chapter="05 / デモとまとめ" />
+
+<!--
+伝えること: このページで初めて完成チャット実機映像を公開する。
+前からのつながり: 構成・処理・メモリ・UIの設計を説明した後で、初めて完成映像の公開へ進む。
+技術補足: 現状は動画未提供。生成映像、疑似チャット、過去UIの画像で代用しない。素材が届いたらconfig/media.jsonのgemmaだけを更新する。新UIなら1743B/B9A6との整合を確認し、映像から見えない終了検証を成功扱いしない。手動再生。PDFでは対応MP4名を示す。
+次への導入: 次は「実装結果と今後の課題」。
+出典:
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
+-->
+---
 layout: default
 ---
 
-# LLMクライアントの処理
+# PC-8001のチャットUI
 
-<ChatSequence simple /><div class="split"><div><p>回答は通常<strong>8 Bずつ</strong>PCへ送る。</p></div><div><p>300bps / 8N1の理論上限：<strong>30 B/s</strong></p></div></div><p class="caption">通信の付加情報を含む実効速度はこれより低い。詳細はAppendix 41。</p>
+<table class="fact-table "><thead><tr><th>機能</th><th>実装</th></tr></thead><tbody><tr><td>入力</td><td>最大64 B / 編集 / Returnで送信</td></tr><tr><td>入力欄</td><td>固定位置。40文字以上は横スクロール</td></tr><tr><td>会話表示</td><td>回答を逐次表示。会話領域だけスクロール</td></tr><tr><td>状態表示</td><td>接続・送信・推論待ち・受信・入力可能</td></tr></tbody></table>
 
-<SlideFooter :number="19" chapter="04 / LLMクライアントの設計" />
+<SlideFooter :number="22" chapter="04 / LLMクライアントの設計" />
 
 <!--
-伝えること: 質問とストリーミング回答のデータフローを示す。
-前からのつながり: 機器の担当を示したので、質問から回答が届くまでの処理順を追う。
-技術補足: NDJSONを逐次解析、TEXTは既定8B、LF、100ms、DONEでflush。1〜32B設定可。時間は送出の目標で伝送完了期限ではない。未ACKバイトを保持し、UART/ACK待ちはHTTP読出しを止める。ASCII大文字化と非ASCIIの?変換、160文字上限。完成回答に人工文字遅延を掛ける方式ではない。
-次への導入: 次は「アプリ領域を2KBに制限した理由」。
+伝えること: 完成画面を見せず入力と表示の設計を説明する。
+前からのつながり: メモリ配分の結果として実装した、入力・表示・状態管理の機能を説明する。
+技術補足: PC側でLLM推論を行うのではない。PC側はASCII端末。このページではクライアントの実装要件だけを提示し、完成UIは見せない。旧UI1683B/F1A3は10往復・ESC・HELLO/ABORT・TX解放。新UI1743B/B9A6は5往復の記録時点で継続中、ESC未操作。モデルでの15往復・復帰試験を新UIの物理実測と混同しない。UIそのものの絵やサムネイルはまだ出さない。
+次への導入: 次は「デモ：Gemmaとのチャット」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/src/serial/chat_queue.zig
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/src/serial/chat_text.zig
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/src/serial/chat_protocol.zig
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/src/serial/chat.zig
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/src/serial/chat_ollama.zig
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-screen20-014.json
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
+-->
+
+---
+layout: default
+---
+
+# 実装結果と今後の課題
+
+<div class="split"><div><h2>できたこと</h2><ul class="constraints"><li>手入力のローダー(100B)から<br>常駐ローダーを導入</li><li>HELLO・描画デモの<br>転送・検証・実行・復帰</li><li>PCの入力・表示を<br>MacのLLM推論へ接続</li></ul></div><div><h2>今後の課題</h2>
+<ul class="constraints">
+<li>データレコーダーの購入</li>
+<li>ワイヤレス化(ESP32など)</li>
+</ul>
+</div></div>
+
+<SlideFooter :number="24" chapter="05 / デモとまとめ" />
+
+<!--
+伝えること: 実装済みと新UIの未確認範囲を整理する。
+前からのつながり: デモの後に、記録で確認した結果と未確認の範囲を整理する。
+技術補足: 到達点はPC単体のLLM推論ではなく、Macとの協調による実機クライアント。耐久や次デプロイなどの残課題は前スライドとfactsの範囲を維持。
+次への導入: 次は「Zig_80 / GitHub」。
+出典:
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/README.ja.md
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-screen20-014.json
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
+-->
+
+---
+layout: default
+---
+
+# Zig_80 / GitHub
+
+<div class="closing-content"><a class="closing-link" href="https://github.com/moribit/Zig_80">github.com/moribit/Zig_80</a><p class="muted">Z80アセンブラ / CPUモデル / CLI・TUI / 実機デプロイ</p><a class="closing-link" href="https://github.com/moribit/Zig_80_LT">github.com/moribit/Zig_80_LT</a><p class="small muted">本編はここまで。Appendixは質疑時に下のリンクから開く。</p><AppendixLinks /></div>
+
+<SlideFooter :number="25" chapter="05 / デモとまとめ" />
+
+<!--
+伝えること: ソースへのリンクで本編を終え質疑用Appendixへ案内する。
+前からのつながり: 結果と課題を踏まえて参照先を示し、本編を終えて質疑へ移る。
+技術補足: リンクはGitHub正本。発表HTMLはリンクを開く操作をしなければネット接続不要。QRコードは未提供で生成しない。
+次への導入: 本編は25で終了。質疑では26（メモリ）、27–29（接続）、30–34（障害・試験）、35–36（導入・CRC）、37–40（入力・描画）、41（HTTP）、42（実機記録）を索引から選ぶ。
+出典:
+- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/README.md
 -->
 
 ---
@@ -507,89 +556,6 @@ layout: default
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/chat.asm
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
--->
-
----
-layout: default
----
-
-# PC-8001のチャットUI
-
-<table class="fact-table "><thead><tr><th>機能</th><th>実装</th></tr></thead><tbody><tr><td>入力</td><td>最大64 B / 編集 / Returnで送信</td></tr><tr><td>入力欄</td><td>固定位置。40文字時は横スクロール</td></tr><tr><td>会話表示</td><td>回答を逐次表示。会話領域だけスクロール</td></tr><tr><td>状態</td><td>接続・送信・推論待ち・受信・入力可能</td></tr></tbody></table><p class="caption">設計の説明。完成画面・動画は次のデモで初めて表示する。</p>
-
-<SlideFooter :number="22" chapter="04 / LLMクライアントの設計" />
-
-<!--
-伝えること: 完成画面を見せず入力と表示の設計を説明する。
-前からのつながり: メモリ配分の結果として実装した、入力・表示・状態管理の機能を説明する。
-技術補足: PC側でLLM推論を行うのではない。PC側はASCII端末。このページではクライアントの実装要件だけを提示し、完成UIは見せない。旧UI1683B/F1A3は10往復・ESC・HELLO/ABORT・TX解放。新UI1743B/B9A6は5往復の記録時点で継続中、ESC未操作。モデルでの15往復・復帰試験を新UIの物理実測と混同しない。UIそのものの絵やサムネイルはまだ出さない。
-次への導入: 次は「デモ：Gemmaとのチャット」。
-出典:
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-screen20-014.json
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
--->
-
----
-layout: video-focus
----
-
-# デモ：Gemmaとのチャット
-
-<MediaAsset asset="gemma" />
-
-<SlideFooter :number="23" chapter="05 / デモとまとめ" />
-
-<!--
-伝えること: このページで初めて完成チャット実機映像を公開する。
-前からのつながり: 構成・処理・メモリ・UIの設計を説明した後で、初めて完成映像の公開へ進む。
-技術補足: 現状は動画未提供。生成映像、疑似チャット、過去UIの画像で代用しない。素材が届いたらconfig/media.jsonのgemmaだけを更新する。新UIなら1743B/B9A6との整合を確認し、映像から見えない終了検証を成功扱いしない。手動再生。PDFでは対応MP4名を示す。
-次への導入: 次は「実装結果と今後の課題」。
-出典:
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
--->
-
----
-layout: default
----
-
-# 実装結果と今後の課題
-
-<div class="split"><div><h2>実装結果</h2><ul class="constraints"><li>mini Stage 0（100 B）から<br>常駐ローダーを導入</li><li>HELLO・描画デモの<br>転送・検証・実行・復帰</li><li>PCの入力・表示を<br>MacのLLM推論へ接続</li></ul></div><div><h2>未確認・今後の課題</h2><ul class="constraints"><li>新UIの実機ESC復帰・次のdeploy</li><li>実機80文字モード</li><li>30分耐久試験</li></ul></div></div>
-
-<SlideFooter :number="24" chapter="05 / デモとまとめ" />
-
-<!--
-伝えること: 実装済みと新UIの未確認範囲を整理する。
-前からのつながり: デモの後に、記録で確認した結果と未確認の範囲を整理する。
-技術補足: 到達点はPC単体のLLM推論ではなく、Macとの協調による実機クライアント。耐久や次デプロイなどの残課題は前スライドとfactsの範囲を維持。
-次への導入: 次は「Zig_80 / GitHub」。
-出典:
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/README.ja.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-screen20-014.json
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
--->
-
----
-layout: default
----
-
-# Zig_80 / GitHub
-
-<div class="closing-content"><a class="closing-link" href="https://github.com/moribit/Zig_80">github.com/moribit/Zig_80</a><p class="muted">Z80アセンブラ / CPUモデル / CLI・TUI / 実機デプロイ</p><a class="closing-link" href="https://github.com/moribit/Zig_80_LT">github.com/moribit/Zig_80_LT</a><p class="small muted">本編はここまで。Appendixは質疑時に下のリンクから開く。</p><AppendixLinks /></div>
-
-<SlideFooter :number="25" chapter="05 / デモとまとめ" />
-
-<!--
-伝えること: ソースへのリンクで本編を終え質疑用Appendixへ案内する。
-前からのつながり: 結果と課題を踏まえて参照先を示し、本編を終えて質疑へ移る。
-技術補足: リンクはGitHub正本。発表HTMLはリンクを開く操作をしなければネット接続不要。QRコードは未提供で生成しない。
-次への導入: 本編は25で終了。質疑では26（メモリ）、27–29（接続）、30–34（障害・試験）、35–36（導入・CRC）、37–40（入力・描画）、41（HTTP）、42（実機記録）を索引から選ぶ。
-出典:
-- https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/README.md
 -->
 
 ---
