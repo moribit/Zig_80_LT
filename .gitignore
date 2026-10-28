@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist-qa/
+artifacts/
+portable/
+*.zip
+.DS_Store
+.slidev/
