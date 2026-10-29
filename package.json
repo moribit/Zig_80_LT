@@ -16,7 +16,9 @@
     "check:content": "node scripts/check-content.mjs",
     "review:pdf": "node scripts/review-pdf.mjs",
     "format": "node scripts/format-slides.mjs",
-    "format:check": "node scripts/format-slides.mjs --check"
+    "format:check": "node scripts/format-slides.mjs --check",
+    "build:pages": "slidev build slides.md --base /Zig_80_LT/ --router-mode hash --out dist-pages --without-notes && node scripts/prune-originals.mjs dist-pages",
+    "verify:pages": "node scripts/verify-pages.mjs"
   },
   "dependencies": {
     "@slidev/cli": "53.0.0",

@@ -3,9 +3,13 @@ import {readFile,stat} from 'node:fs/promises';
 import path from 'node:path';
 const root=path.resolve(process.argv[2]||'dist');
 const port=Number(process.argv[3]||4173);
+const base=process.argv[4]||'/';
+if(!base.startsWith('/')||!base.endsWith('/'))throw new Error('Base must begin and end with /');
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.woff2':'font/woff2','.mp4':'video/mp4','.pdf':'application/pdf'};
 const server=http.createServer(async(req,res)=>{try{
- const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+ const urlPath=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
+ if(!urlPath.startsWith(base)){res.writeHead(404).end();return;}
+ const pathname='/'+urlPath.slice(base.length);
  let file=path.resolve(root,'.'+pathname);
  if(file!==root&&!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}
  try{if((await stat(file)).isDirectory())file=path.join(file,'index.html');}catch{if(path.extname(file)){res.writeHead(404).end();return;}file=path.join(root,'index.html');}

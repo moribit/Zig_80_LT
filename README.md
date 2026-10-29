@@ -8,6 +8,25 @@ Webエンジニア向けに、Zig_80によるPC-8001実機開発を説明する�
 完成したGemmaチャット画面・映像・サムネイルを見せる場所は23枚目のみ。
 実機写真7点とORBITAL RINGS / Gemmaの実機動画を反映済み。3枚目はキーボードの写真、Gemmaデモは23枚目。
 
+## GitHub Pagesで公開
+
+公開URL: **https://moribit.github.io/Zig_80_LT/**
+
+`main`へのpushで `.github/workflows/pages.yml` が型検査・内容検査・ビルドを実行し、GitHub Pagesへ自動公開する。
+発表者ノートとカメラ原本HEIC/MOVは公開HTMLに含めない。写真・MP4・フォントは同じサイト内に置く。
+公開版は `/Zig_80_LT/` をベースにしたハッシュルーターを使い、途中ページも再読み込みできる。
+例: キーボード `#/3`、Gemmaデモ `#/23`、Appendix `#/27`。完成映像は23枚目のみ、動画は手動再生。
+
+```sh
+npm run build:pages       # dist-pages/を生成。既存のオフライン用dist/とは別
+npm run verify:pages      # ローカルで公開URL構成を検証（Chromeが必要）
+PAGES_URL=https://moribit.github.io/Zig_80_LT/ npm run verify:pages
+```
+
+初回のGitHub設定はSettings → Pages → Sourceを「GitHub Actions」にする。
+再公開はmainへのpushまたはActionsの「Deploy GitHub Pages」→ Run workflow。
+ローカル発表・PDF・ポータブル配布は以下の既存手順を使用する。
+
 ## 開発と検証
 
 Node.js **22.12以上**、npm、現行Chrome/Chromiumを使用。依存はpackage-lock.jsonで固定。

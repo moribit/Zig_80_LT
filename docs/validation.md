@@ -1,3 +1,21 @@
+# GitHub Pages公開構成（2026-10-29）
+
+公開URL: https://moribit.github.io/Zig_80_LT/
+
+- .github/workflows/pages.ymlでmainへのpushとworkflow_dispatchに対応。npm ci・内容検査・型検査・公開用ビルドを経てPagesへ配布。
+- build:pagesはbase=/Zig_80_LT/、router-mode=hash、出力dist-pages、without-notes。ローカル用のbuild（base=/、history）と分離。
+- MediaAssetの写真・動画・ポスターURLをViteのBASE_URLから解決。ローカル同梱の写真・MP4・フォントを使用。
+- 原本HEIC/MOVは公開出力から除外。発表者ノートの本文が公開JSに含まれないことを確認。
+- ローカルのサブディレクトリ配置でChrome156 / 1920×1080、全44枚、写真7点（キーボード再掲を含む8枠）、両動画の手動再生・停止、直接リンクのHTTP200再読み込み、本編26での停止、Appendix27への索引リンクが成功。
+- typecheck / check:content / build:pages / 既存buildが成功。ローカル公開版のHTTP失敗・ブラウザエラー・外部リクエストは0。
+- ローカル記録: artifacts/pages-local/report.json。公開後も同一検査を PAGES_URL=https://moribit.github.io/Zig_80_LT/ npm run verify:pages で実行でき、結果をartifacts/pages-live/report.jsonへ保存する。
+
+スライド順・内容・Gemma完成画面の初出23・本編26＋Appendix18は維持。
+
+---
+
+以下は過去の検証履歴。
+
 # Gemma動画反映・キーボード追加（2026-10-29）
 
 PC-8001紹介の直後に「キーボード」を追加（3枚目）。既存Appendixの写真も維持。
