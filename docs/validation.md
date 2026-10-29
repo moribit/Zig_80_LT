@@ -8,7 +8,10 @@
 - 原本HEIC/MOVは公開出力から除外。発表者ノートの本文が公開JSに含まれないことを確認。
 - ローカルのサブディレクトリ配置でChrome156 / 1920×1080、全44枚、写真7点（キーボード再掲を含む8枠）、両動画の手動再生・停止、直接リンクのHTTP200再読み込み、本編26での停止、Appendix27への索引リンクが成功。
 - typecheck / check:content / build:pages / 既存buildが成功。ローカル公開版のHTTP失敗・ブラウザエラー・外部リクエストは0。
-- ローカル記録: artifacts/pages-local/report.json。公開後も同一検査を PAGES_URL=https://moribit.github.io/Zig_80_LT/ npm run verify:pages で実行でき、結果をartifacts/pages-live/report.jsonへ保存する。
+- ローカル記録: artifacts/pages-local/report.json。
+- GitHub Actionsのnpm ci・内容検査・型検査・ビルド・Pagesデプロイが成功。公開URLのHTTP200とHTTPS有効を確認。
+- 公開先でも同一検査を実行し、全44枚・写真・直接リンクの再読み込み・Appendix・両動画の手動再生/停止が成功。HTTP失敗・ブラウザエラー・外部依存は0。記録: artifacts/pages-live/report.json。画像のdecode完了を待って検査し、実ネットワーク上の非同期読み込みに対応。
+- 既存ローカル発表版のverify（44枚・両動画・合成QA・読み込み済み区間のoffline再生）も成功。
 
 スライド順・内容・Gemma完成画面の初出23・本編26＋Appendix18は維持。
 

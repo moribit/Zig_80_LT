@@ -43,8 +43,9 @@ try{
   const slide=page.locator('.slidev-page:visible .slidev-layout').first();
   assert.equal((await slide.locator('h1').innerText()).replace(/\s/g,''),s.title.replace(/\s/g,''));
   assert.equal(await slide.locator('[data-asset="gemma"]').count(),s.number===deck.revealSlide?1:0);
+  await slide.locator('img.real-photo').evaluateAll(imgs=>Promise.all(imgs.map(i=>i.decode())));
   const photos=await slide.locator('img.real-photo').evaluateAll(imgs=>imgs.map(i=>({src:i.src,ok:i.complete&&i.naturalWidth>0})));
-  for(const photo of photos){assert.ok(photo.ok);assert.ok(photo.src.startsWith(base+'photos/'));}
+  for(const photo of photos){assert.ok(photo.ok,`slide ${s.number}: ${photo.src}`);assert.ok(photo.src.startsWith(base+'photos/'));}
   if([1,2,3,7,19,23,26,27,44].includes(s.number))await page.screenshot({path:`${folder}/slide-${s.number}.png`});
  }
  // Direct links and reloads must be served with HTTP 200 on GitHub Pages.
