@@ -3,15 +3,15 @@
     "kind": "photo",
     "title": "PC-8001 実機全体",
     "hint": "本体・キーボード・CRTが分かる横位置4:3の写真",
-    "src": null,
+    "src": "/photos/PC-8001.JPG",
     "poster": null,
     "slide": 2
   },
   "typing": {
     "kind": "photo",
-    "title": "機械語を手入力している画面",
+    "title": "機械語モニターの実機画面",
     "hint": "MON入力と全バイトの照合が分かる実機写真",
-    "src": null,
+    "src": "/photos/mon_mode.jpg",
     "poster": null,
     "slide": 13
   },
@@ -19,15 +19,15 @@
     "kind": "photo",
     "title": "S10とPico 2の配線",
     "hint": "コネクタの向きと接続先を確認できる実物写真",
-    "src": null,
+    "src": "/photos/S10_Pico2.jpg",
     "poster": null,
-    "slide": 29
+    "slide": 8
   },
   "hello": {
-    "kind": "video",
-    "title": "HELLO 実機映像",
-    "hint": "HELLO FROM ZIG_80の表示を撮影したMP4",
-    "src": null,
+    "kind": "photo",
+    "title": "HELLO 実機画面",
+    "hint": "HELLO FROM ZIG_80 Ver 1.1の表示写真",
+    "src": "/photos/hello.jpg",
     "poster": null,
     "slide": 17
   },
@@ -35,8 +35,8 @@
     "kind": "video",
     "title": "ORBITAL RINGS 実機映像",
     "hint": "2本のリングの動きと終了表示を撮影したMP4",
-    "src": null,
-    "poster": null,
+    "src": "/videos/orbital.mp4",
+    "poster": "/photos/orbital-poster.jpg",
     "slide": 18
   },
   "gemma": {
@@ -47,21 +47,28 @@
     "poster": null,
     "slide": 22
   },
-  "manual": {
+  "manual1": {
     "kind": "photo",
-    "title": "シリアル通信のマニュアル該当箇所",
-    "hint": "初代PC-8001用資料のシリアル説明。表紙・版・掲載ページも確認",
-    "src": null,
+    "title": "PC-8001 USER’S MANUAL 表紙",
+    "hint": "ユーザー提供の冊子写真",
+    "src": "/photos/manual1.jpg",
     "poster": null,
-    "slide": 6,
-    "label": "マニュアル写真"
+    "slide": 6
   },
-  "connection": {
+  "manual2": {
     "kind": "photo",
-    "title": "Mac・Pico 2・PC-8001の接続全景",
-    "hint": "Mac、USBケーブル、Pico 2、PC-8001が一緒に写る実機写真",
-    "src": null,
+    "title": "シリアル入出力の端子説明",
+    "hint": "ユーザー提供の該当箇所写真",
+    "src": "/photos/manual2.jpg",
     "poster": null,
-    "slide": 8
+    "slide": 6
+  },
+  "keyboard": {
+    "kind": "photo",
+    "title": "PC-8001のキーボード",
+    "hint": "SHIFT・ESC・STOP等の実物配置",
+    "src": "/photos/keyboard.jpg",
+    "poster": null,
+    "slide": 39
   }
 }

@@ -117,7 +117,11 @@
 .slidev-layout.message { display:flex; align-items:center; justify-content:center; text-align:center; }
 .slidev-layout.message h1 { font-size:50px; line-height:1.5; margin:0; max-width:none; white-space:nowrap; color:var(--ink); }
 .slidev-layout.message.short-message h1 { font-size:76px; }
-.slidev-layout .manual-grid { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:48px; align-items:center; }
+.slidev-layout .manual-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; align-items:start; }
+.manual-grid .real-photo { height:370px; }
+.keyboard-photo-layout .media-asset .real-photo { height:140px; }
+.keyboard-photo-layout .media-asset figcaption { margin:2px 0 10px; }
+.slidev-layout .keyboard-photo-layout pre { padding:12px 24px!important; }
 .slidev-layout .manual-labels p { font-size:34px; margin:0 0 24px; }
 .slidev-layout .manual-labels p:last-child { margin-bottom:0; }
 

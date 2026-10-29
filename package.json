@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "slidev slides.md",
-    "build": "slidev build slides.md --base / --without-notes",
-    "build:qa": "slidev build media-check.md --base / --out dist-qa",
+    "build": "slidev build slides.md --base / --without-notes && node scripts/prune-originals.mjs dist",
+    "build:qa": "slidev build media-check.md --base / --out dist-qa && node scripts/prune-originals.mjs dist-qa",
     "export": "node scripts/export.mjs pdf",
     "thumbnails": "node scripts/export.mjs png",
     "typecheck": "vue-tsc --noEmit",

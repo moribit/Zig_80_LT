@@ -52,6 +52,38 @@ try{
   const gemma=slide.locator('[data-asset="gemma"]');
   assert.equal(await gemma.count(),n===deck.revealSlide?1:0,'final chat only on its assigned slide');
  }
+ const hardwareMedia={};
+ for(const [key,item] of Object.entries(manifest)){
+  hardwareMedia[key]={slide:item.slide,provided:!!item.src,playbackVerified:false};
+  if(!item.src)continue;
+  await page.goto(`${mainOrigin}/${item.slide}`,{waitUntil:'networkidle'});
+  const asset=page.locator(`.slidev-page:visible [data-asset="${key}"]`);
+  if(item.kind==='photo'){
+   assert.equal(await asset.locator('img').evaluate(i=>i.complete&&i.naturalWidth>0),true);
+   hardwareMedia[key].imageVerified=true;continue;
+  }
+  const realVideo=asset.locator('video');await realVideo.waitFor();
+  await page.waitForTimeout(300);
+  await realVideo.evaluate(v=>{v.preload='auto';v.load()});
+  let buffered=false;
+  for(let attempt=0;attempt<60&&!buffered;attempt++){
+   await page.waitForTimeout(250);
+   buffered=await realVideo.evaluate(v=>v.readyState>=2&&v.buffered.length>0&&v.buffered.start(0)===0&&v.buffered.end(0)>=5);
+  }
+  assert.ok(buffered,'provided footage buffered through the offline seek/play test interval');
+  assert.equal(await realVideo.evaluate(v=>v.paused&&!v.autoplay&&v.controls),true);
+  const box=await realVideo.boundingBox();
+  const contentHeight=Math.min(box.height,box.width*9/16);
+  const toggle=()=>page.mouse.click(box.x+44,box.y+(box.height+contentHeight)/2-25);
+  await toggle();await page.waitForTimeout(500);
+  assert.equal(await realVideo.evaluate(v=>!v.paused&&v.currentTime>0),true,'provided footage plays via native control');
+  await toggle();assert.equal(await realVideo.evaluate(v=>v.paused),true);
+  await context.setOffline(true);await realVideo.evaluate(v=>{v.currentTime=3});
+  await toggle();await page.waitForTimeout(500);
+  assert.equal(await realVideo.evaluate(v=>!v.paused&&v.currentTime>3),true,'provided footage plays after offline seek');
+  await toggle();await context.setOffline(false);
+  hardwareMedia[key]={...hardwareMedia[key],playbackVerified:true,manualPlayPause:true,offlineBufferedPlayback:true,offlineSeek:true,duration:await realVideo.evaluate(v=>v.duration)};
+ }
  // The normal next key must stop at the main ending in both presentation modes.
  for(const prefix of ['', '/presenter']){
   await page.goto(`${mainOrigin}${prefix}/${deck.mainCount}`,{waitUntil:'networkidle'});
@@ -62,6 +94,13 @@ try{
  await page.getByRole('link',{name:`${deck.appendixStart} — メモリ`,exact:true}).click();
  await page.waitForURL(`**/${deck.appendixStart}?appendix=1`);
  assert.ok(await page.locator('.slidev-page:visible h1').first().textContent(),'appendix link navigates');
+ await page.goto(`${mainOrigin}/${deck.mainCount}`,{waitUntil:'networkidle'});
+ const indexLinks=await page.locator('.slidev-page:visible .appendix-links a').evaluateAll(as=>as.map(a=>({href:a.getAttribute('href'),text:a.textContent})));
+ for(const link of indexLinks){
+  const n=Number(link.href.match(/\/(\d+)/)[1]);assert.ok(n>=deck.appendixStart&&n<=deck.count,'index page in Appendix range');
+  await page.goto(`${mainOrigin}${link.href}`,{waitUntil:'networkidle'});
+  assert.equal((await page.locator('.slidev-page:visible h1').first().textContent()).trim(),deck.slides[n-1].title);
+ }
  // All appendix URLs were independently rendered above; test returning to the ending.
  await page.goto(`${mainOrigin}/${deck.mainCount}`,{waitUntil:'networkidle'});
  const qa=await context.newPage();await qa.goto(`${qaOrigin}/1`,{waitUntil:'networkidle'});
@@ -84,7 +123,7 @@ try{
  assert.equal(await qa.locator('video').first().evaluate(v=>v.paused),true);
  const range=await context.request.get(`${qaOrigin}/videos/playback-check.mp4`,{headers:{Range:'bytes=0-99'}});assert.equal(range.status(),206);assert.equal((await range.body()).length,100);
  const presenter=await context.newPage();await presenter.goto(`${mainOrigin}/presenter/1`,{waitUntil:'networkidle'});await presenter.screenshot({path:'artifacts/browser/presenter.png'});
- const report={date:new Date().toISOString(),browser:await browser.version(),viewport:'1920x1080',root:process.env.VERIFY_DIST||'dist',slides:deck.count,external,errors,consoleErrors,failures,layoutIssues,contrastIssues,appendixNavigation:{directPages:true,indexLink:true,mainEndStops:true,presenterEndStops:true},syntheticQa:{manualPlayPause:true,offlineBufferedPlayback:true,offlineSeek:true,range206:true},hardwareMedia:Object.fromEntries(Object.entries(manifest).map(([key,item])=>[key,{slide:item.slide,provided:!!item.src,playbackVerified:false}])),osNetworkDisabled:false};
+ const report={date:new Date().toISOString(),browser:await browser.version(),viewport:'1920x1080',root:process.env.VERIFY_DIST||'dist',slides:deck.count,external,errors,consoleErrors,failures,layoutIssues,contrastIssues,appendixNavigation:{directPages:true,indexLink:true,mainEndStops:true,presenterEndStops:true},syntheticQa:{manualPlayPause:true,offlineBufferedPlayback:true,offlineSeek:true,range206:true},hardwareMedia,osNetworkDisabled:false};
  await writeFile('artifacts/verification.json',JSON.stringify(report,null,2));
  await writeFile('artifacts/contact-sheet.html',`<!doctype html><html lang="ja"><meta charset="utf-8"><title>Zig_80 LT 全${deck.count}枚</title><style>body{background:#ffffff;color:#171717;font:18px sans-serif;margin:24px}main{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}figure{margin:0}img{width:100%;border:1px solid #e5e7eb}figcaption{margin:8px 0 16px;line-height:1.5}h2{margin-top:40px}</style><h1>Zig_80 LT / ${deck.count}枚の視覚レビュー</h1>${Object.entries(deck.chapters).map(([ch,name])=>`<h2>${Number(ch)===6 ? name : `第${ch}章 ${name}`}</h2><main>${deck.slides.filter(s=>s.chapter===Number(ch)).map(s=>`<figure><a href="browser/slide-${s.number}.png"><img src="browser/slide-${s.number}.png" alt="${s.title}"></a><figcaption>${s.number}. ${s.title}</figcaption></figure>`).join('')}</main>`).join('')}</html>`);
  const artifactOrigin=await serve('artifacts');
@@ -95,5 +134,5 @@ try{
   await review.screenshot({path:`artifacts/chapter-${ch}.png`,fullPage:true});
  }
  assert.deepEqual(external,[],'no external requests');assert.deepEqual(errors,[],'no page errors');assert.deepEqual(consoleErrors,[],'no browser console errors');assert.deepEqual(failures,[],'no failed HTTP');assert.deepEqual(layoutIssues,[],'no canvas/footer/code overflow');assert.deepEqual(contrastIssues,[],'white background and black body text');
- console.log(`PASS: ${deck.count} slides, notes/reveal policy, external network blocked, synthetic MP4 native controls and buffered offline playback. Hardware footage NOT verified.`);
+ console.log(`PASS: ${deck.count} slides, notes/reveal policy, external network blocked, synthetic and provided MP4 controls/offline playback. Missing Gemma footage remains unverified.`);
 }finally{await browser?.close();for(const child of servers)child.kill();}

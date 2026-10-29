@@ -3,7 +3,7 @@ layout: default
 hideInToc: true
 ---
 
-# アプリ領域を2KBに制限した理由
+# Appendix：アプリ領域を2KBに制限した理由
 
 <div class="memory-layout">
   <MemoryMap />
@@ -35,7 +35,7 @@ layout: default
 hideInToc: true
 ---
 
-# 2KBに収めたZ80アプリ
+# Appendix：2KBに収めたZ80アプリ
 
 <p>アプリ領域：<strong>D000–D7FF = 2,048 B</strong></p>
 <MemoryBudget />
@@ -88,7 +88,7 @@ CLEAR 300,&HCFFF
 伝えること: CLEAR予約と転送許可範囲とABIを詳述する。
 前からのつながり: 本編を終えて質疑で参照する補足資料。
 技術補足: 常駐プロトコルはCRC16付き。VERIFYは受信時の累積CRCでなく配置済みRAMを再計算。EXECは独立要求。RETは規約を守るアプリのみ。任意コードの実行時隔離や暴走復帰は保証しない。miniはREADY37hを送り333B+SUM8を受信する。SUM8はCRC16より弱く複数誤りや順序交換をすべて検知しない。中継は旧stage0.asm、常駐はstage1.asmという互換ファイル名。実コード1134+ゼロ埋め146=1280。常駐のスタックE700–E7FFはアプリ2KBとは別。E900以降は転送禁止。
-次への導入: 次は「Appendix：S10と8251」。
+次への導入: 次は「Appendix：UARTフレームと反転信号」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-memory-map.md
@@ -116,11 +116,11 @@ hideInToc: true
   </div>
 </div>
 
-<SlideFooter :number="30" chapter="Appendix" />
+<SlideFooter :number="29" chapter="Appendix" />
 
 <!--
 伝えること: 8N1と反転極性と理論転送量を示す。
-前からのつながり: 前ページ「Appendix：S10と8251」の説明を受ける。
+前からのつながり: 本編8の実物配線を踏まえ、UARTフレームの詳細を示す。
 技術補足: 8N1はstart1+data8+stop1=10bit。30B/sは線路上の理論上限でありpayload速度や推論速度ではない。TX/RXは反転モード。外部反転回路との二重反転に注意。
 次への導入: 次は「Appendix：PIOによるUART実装」。
 出典:
@@ -160,7 +160,7 @@ bits:
   </div>
 </div>
 
-<SlideFooter :number="31" chapter="Appendix" />
+<SlideFooter :number="30" chapter="Appendix" />
 
 <!--
 伝えること: PicoのPIOとホスト接続の関係を示す。
@@ -195,7 +195,7 @@ hideInToc: true
 </div>
 <p class="takeaway">PCのローダーやUART信号を必要としない再現条件を確認。</p>
 
-<SlideFooter :number="32" chapter="Appendix" />
+<SlideFooter :number="31" chapter="Appendix" />
 
 <!--
 伝えること: USB単体での停止条件と観測値を示す。
@@ -228,7 +228,7 @@ hideInToc: true
 </div>
 <p class="caption">SDK内部の停止箇所・根本原因は未確定。長時間の無再発を保証しない。</p>
 
-<SlideFooter :number="33" chapter="Appendix" />
+<SlideFooter :number="32" chapter="Appendix" />
 
 <!--
 伝えること: 待機処理変更と120秒の測定条件を示す。
@@ -259,7 +259,7 @@ hideInToc: true
 </div>
 <p class="takeaway">単体ループバックは追加idleあり。隙間なし条件は未検証だった。</p>
 
-<SlideFooter :number="34" chapter="Appendix" />
+<SlideFooter :number="33" chapter="Appendix" />
 
 <!--
 伝えること: 185B一致後のフレーミングエラーを示す。
@@ -291,7 +291,7 @@ hideInToc: true
 </div>
 <p class="caption">300bps・8N1・TX側は維持。モデルでの検証結果であり、実機確認は次ページ。</p>
 
-<SlideFooter :number="35" chapter="Appendix" />
+<SlideFooter :number="34" chapter="Appendix" />
 
 <!--
 伝えること: モデルでの再現と40条件での改善を示す。
@@ -321,7 +321,7 @@ hideInToc: true
   </div>
 </div>
 
-<SlideFooter :number="36" chapter="Appendix" />
+<SlideFooter :number="35" chapter="Appendix" />
 
 <!--
 伝えること: 256B往復一致と測定区間を示す。
@@ -349,7 +349,7 @@ hideInToc: true
   B。
 </p>
 
-<SlideFooter :number="37" chapter="Appendix" />
+<SlideFooter :number="36" chapter="Appendix" />
 
 <!--
 伝えること: 100Bの入口から常駐を導入するサイズと配置を示す。
@@ -390,7 +390,7 @@ hideInToc: true
 </div>
 <p class="caption">チャットにNAKはなく、不正フレームは破棄。CRC-16/CCITT-FALSE。</p>
 
-<SlideFooter :number="38" chapter="Appendix" />
+<SlideFooter :number="37" chapter="Appendix" />
 
 <!--
 伝えること: ローダーとチャットの信頼性制御を区別する。
@@ -433,7 +433,7 @@ key_row:
   </div>
 </div>
 
-<SlideFooter :number="39" chapter="Appendix" />
+<SlideFooter :number="38" chapter="Appendix" />
 
 <!--
 伝えること: I/O読取とactive-lowと立ち上がり抽出を実コードで説明する。
@@ -452,8 +452,9 @@ hideInToc: true
 
 # Appendix：文字変換と終了処理
 
-<div class="split">
+<div class="split keyboard-photo-layout">
   <div>
+    <MediaAsset asset="keyboard" compact />
 
 ```asm
     in a,(8)
@@ -477,12 +478,12 @@ hideInToc: true
 </div>
 <p class="caption">旧UIの実機ESC復帰を、新UIの確認済み結果として流用しない。</p>
 
-<SlideFooter :number="40" chapter="Appendix" />
+<SlideFooter :number="39" chapter="Appendix" />
 
 <!--
 伝えること: SHIFT変換と入力遅延とESC/STOPの扱いを示す。
 前からのつながり: 前ページ「Appendix：キーマトリクスと押下判定」の説明を受ける。
-技術補足: key先頭はIN A,(9) AND 81h CP 81hでESC/STOPを検出。終了CANCELはACKと送信完了を待ってRET。debounceはキー入力のみに適用し通信へ人工遅延を付けない。SHIFTは記号表、英字はuppercase。キーを押したままではedgeが発生しない。
+技術補足: ユーザー提供の実物キー配置写真を追加。写真はキーの物理配置を示し、走査回路や実装版の証拠とは区別する。key先頭はIN A,(9) AND 81h CP 81hでESC/STOPを検出。終了CANCELはACKと送信完了を待ってRET。debounceはキー入力のみに適用し通信へ人工遅延を付けない。SHIFTは記号表、英字はuppercase。キーを押したままではedgeが発生しない。
 次への導入: 次は「Appendix：VRAMと文字描画」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/chat.asm
@@ -516,7 +517,7 @@ hideInToc: true
   </div>
 </div>
 
-<SlideFooter :number="41" chapter="Appendix" />
+<SlideFooter :number="40" chapter="Appendix" />
 
 <!--
 伝えること: 行120Bの文字と属性を分け座標からの書込先を示す。
@@ -576,7 +577,7 @@ hideInToc: true
 </div>
 <p class="caption">初期29B HELLOの表示不一致 → 40/80対応44Bへ修正。実機80文字モードは未確認。</p>
 
-<SlideFooter :number="42" chapter="Appendix" />
+<SlideFooter :number="41" chapter="Appendix" />
 
 <!--
 伝えること: 表示モードの読取と文字間隔とCRTC座標を説明する。
@@ -613,7 +614,7 @@ hideInToc: true
 </div>
 <p class="caption">送信・ACK待ちの間はHTTP読出しを停止。未ACK分はキューに保持。</p>
 
-<SlideFooter :number="43" chapter="Appendix" />
+<SlideFooter :number="42" chapter="Appendix" />
 
 <!--
 伝えること: HTTP逐次受信と低速UARTの流量制御を説明する。
@@ -658,7 +659,7 @@ hideInToc: true
 <p class="takeaway">新UIでは<strong>入力欄を固定</strong>し、会話だけをスクロール。</p>
 <p class="caption">2026-10-27の記録時点。新UIも30分耐久・実機80文字モードは未確認。</p>
 
-<SlideFooter :number="44" chapter="Appendix" />
+<SlideFooter :number="43" chapter="Appendix" />
 
 <!--
 伝えること: 新旧UIの成功範囲と未確認を区別する。

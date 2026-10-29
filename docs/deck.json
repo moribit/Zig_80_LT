@@ -1,5 +1,5 @@
 {
-  "count": 44,
+  "count": 43,
   "mainCount": 25,
   "appendixStart": 26,
   "revealSlide": 22,
@@ -58,9 +58,9 @@
     },
     {
       "number": 8,
-      "title": "MacとPC-8001を接続する",
+      "title": "PC-8001(S10)とRaspberryPi Pico2",
       "chapter": 2,
-      "purpose": "接続全景の写真を見せる領域と構成図を分離する。"
+      "purpose": "S10の論理信号と物理配線の区別を示す。"
     },
     {
       "number": 9,
@@ -121,7 +121,7 @@
     },
     {
       "number": 18,
-      "title": "ORBITAL RINGS",
+      "title": "リングのアニメーション",
       "chapter": 3,
       "purpose": "582Bの描画デモと実機確認結果を示す。"
     },
@@ -171,13 +171,13 @@
     },
     {
       "number": 26,
-      "title": "アプリ領域を2KBに制限した理由",
+      "title": "Appendix：アプリ領域を2KBに制限した理由",
       "chapter": 6,
       "purpose": "2KBがハード上限ではなく転送プロファイルの設計制限だと説明する。"
     },
     {
       "number": 27,
-      "title": "2KBに収めたZ80アプリ",
+      "title": "Appendix：2KBに収めたZ80アプリ",
       "chapter": 6,
       "purpose": "1743Bと211Bと94Bの配分を示す。"
     },
@@ -189,96 +189,90 @@
     },
     {
       "number": 29,
-      "title": "Appendix：S10と8251",
-      "chapter": 6,
-      "purpose": "S10の論理信号と物理配線の区別を示す。"
-    },
-    {
-      "number": 30,
       "title": "Appendix：UARTフレームと反転信号",
       "chapter": 6,
       "purpose": "8N1と反転極性と理論転送量を示す。"
     },
     {
-      "number": 31,
+      "number": 30,
       "title": "Appendix：PIOによるUART実装",
       "chapter": 6,
       "purpose": "PicoのPIOとホスト接続の関係を示す。"
     },
     {
-      "number": 32,
+      "number": 31,
       "title": "Appendix：USB停止の切り分け",
       "chapter": 6,
       "purpose": "USB単体での停止条件と観測値を示す。"
     },
     {
-      "number": 33,
+      "number": 32,
       "title": "Appendix：Watchdog再起動への対処",
       "chapter": 6,
       "purpose": "待機処理変更と120秒の測定条件を示す。"
     },
     {
-      "number": 34,
+      "number": 33,
       "title": "Appendix：連続通信エラーの再現",
       "chapter": 6,
       "purpose": "185B一致後のフレーミングエラーを示す。"
     },
     {
-      "number": 35,
+      "number": 34,
       "title": "Appendix：PIO受信タイミングの修正",
       "chapter": 6,
       "purpose": "モデルでの再現と40条件での改善を示す。"
     },
     {
-      "number": 36,
+      "number": 35,
       "title": "Appendix：256B往復試験",
       "chapter": 6,
       "purpose": "256B往復一致と測定区間を示す。"
     },
     {
-      "number": 37,
+      "number": 36,
       "title": "Appendix：ブートストラップの詳細",
       "chapter": 6,
       "purpose": "100Bの入口から常駐を導入するサイズと配置を示す。"
     },
     {
-      "number": 38,
+      "number": 37,
       "title": "Appendix：CRC16・ACK・再送",
       "chapter": 6,
       "purpose": "ローダーとチャットの信頼性制御を区別する。"
     },
     {
-      "number": 39,
+      "number": 38,
       "title": "Appendix：キーマトリクスと押下判定",
       "chapter": 6,
       "purpose": "I/O読取とactive-lowと立ち上がり抽出を実コードで説明する。"
     },
     {
-      "number": 40,
+      "number": 39,
       "title": "Appendix：文字変換と終了処理",
       "chapter": 6,
       "purpose": "SHIFT変換と入力遅延とESC/STOPの扱いを示す。"
     },
     {
-      "number": 41,
+      "number": 40,
       "title": "Appendix：VRAMと文字描画",
       "chapter": 6,
       "purpose": "行120Bの文字と属性を分け座標からの書込先を示す。"
     },
     {
-      "number": 42,
+      "number": 41,
       "title": "Appendix：40/80文字とカーソル",
       "chapter": 6,
       "purpose": "表示モードの読取と文字間隔とCRTC座標を説明する。"
     },
     {
-      "number": 43,
+      "number": 42,
       "title": "Appendix：HTTPとバックプレッシャー",
       "chapter": 6,
       "purpose": "HTTP逐次受信と低速UARTの流量制御を説明する。"
     },
     {
-      "number": 44,
+      "number": 43,
       "title": "Appendix：実機検証の詳細記録",
       "chapter": 6,
       "purpose": "新旧UIの成功範囲と未確認を区別する。"

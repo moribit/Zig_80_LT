@@ -2,7 +2,7 @@
 theme: default
 favicon: /favicon.svg
 title: 47年前のPCでローカルLLMクライアントを動かしてみた
-info: Zig_80 PC-8001実機開発の物語 / 本編25枚 / Appendix19枚
+info: Zig_80 PC-8001実機開発の物語 / 本編25枚 / Appendix18枚
 aspectRatio: 16/9
 canvasWidth: 1100
 colorSchema: light
@@ -91,7 +91,7 @@ layout: default
 <!--
 伝えること: 初代PC-8001の仕様とN-BASIC搭載を紹介する。
 前からのつながり: まず対象のPCを共有し、現代の開発環境との前提の違いを説明する。
-技術補足: CPUはμPD780C-1、Z80互換。標準RAM16KBは機種仕様であり所有機の増設量は未確認。写真は未提供で実機を模した図を作らない。
+技術補足: CPUはμPD780C-1、Z80互換。標準RAM16KBは機種仕様であり所有機の増設量は未確認。ユーザー提供の本体・CRT写真を表示する。写真からRAM容量を推定しない。
 仕様補足: NEC公式製品情報のCPUクロック欄は型番末尾と周波数が連結されている。μPD780C-1 / 4 MHzとして科学館資料でも照合。ROM24 KB、N-BASIC、代表的な40/80文字・20/25行、8251は以下の資料で確認。PC-8001B資料は補助資料とし、初代所有機との差を自動的に同一視しない。
 次への導入: 次は「N-BASICでのプログラム開発」。
 出典:
@@ -205,12 +205,8 @@ layout: default
 # マニュアルで見つけたシリアル通信
 
 <div class="manual-grid">
-  <MediaAsset asset="manual" />
-  <div class="manual-labels">
-    <p>S10</p>
-    <p>シリアル通信</p>
-    <p>8251</p>
-  </div>
+  <MediaAsset asset="manual1" />
+  <MediaAsset asset="manual2" />
 </div>
 
 <SlideFooter :number="6" chapter="01 / 1979年の開発環境" />
@@ -218,7 +214,7 @@ layout: default
 <!--
 伝えること: マニュアルでS10に着目した経緯とシリアル通信の存在を紹介する。
 前からのつながり: 操作の手間から、別の入力・転送経路を探す話へつなぐ。
-技術補足: マニュアルを見てS10に着目したという経緯は今回のユーザー提供情報。日付・発見場所・冊子の正式名・版・ページ番号は未提供で追加しない。S10と8251を使う初代PC-8001の技術関係はZig_80 serial-validationの初代対象記述と実機記録で照合。NEC原本回路の完全照合は元文書でも未完了。既存のPC-8001B User’s Manual参照を、所有機のマニュアル写真やS10端子図の証拠に転用しない。素材提供後に表紙・対象機種・該当箇所を確認する。
+技術補足: マニュアルを見てS10に着目したという経緯は今回のユーザー提供情報。発見日・場所は未提供。提供写真の表紙はPC-8001 USER’S MANUAL / PC-8101 / PTS-001。写真2にはPC-8001、PC-8062ケーブル、GND/TXD/RXDの端子説明が写る。版・掲載ページは未確認。S10と8251を使う初代PC-8001の技術関係はZig_80 serial-validationの初代対象記述と実機記録で照合。NEC原本回路の完全照合は元文書でも未完了。既存のPC-8001B User’s Manual参照を、所有機のマニュアル写真やS10端子図の証拠に転用しない。提供写真は初代PC-8001表記を確認。写真の端子表だけでPicoへの直結可否や電圧を判断しない。
 口頭補足: 当時の操作手順を紹介した後、マニュアルを読みシリアル通信に着目した経緯へ移る。
 次への導入: 次は「これで通信できたら、色々できそう！」。
 出典:
@@ -240,6 +236,7 @@ layout: message
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 -->
+
 ---
 layout: default
 ---
@@ -258,9 +255,9 @@ layout: default
 
 <!--
 伝えること: S10の論理信号と物理配線の区別を示す。
-前からのつながり: 前ページ「Appendix：詳細メモリマップ」の説明を受ける。
+前からのつながり: Macとの通信を考え、S10とPico 2の実物接続を示す。
 技術補足: 公開資料のTTL反転信号に基づき実機条件を確認する。物理ピン番号、電圧、向きの推測図は作らない。UARTは8251。候補接続表と所有機の実測を区別する。
-次への導入: 次は「Appendix：UARTフレームと反転信号」。
+次への導入: 次はMac・USB・Pico 2・PC-8001の構成図で役割を整理する。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 -->
@@ -277,7 +274,7 @@ layout: default
 
 <!--
 伝えること: USBとS10の間をPico 2で橋渡しする構成と機器の役割を示す。
-前からのつながり: 前ページは接続全景の写真枠。ここでは機器ごとの担当を図で整理する。
+前からのつながり: 前ページはS10とPico 2の接写。ここでは機器ごとの担当を図で整理する。
 技術補足: 図は論理構成。Pico GP0 TX→S10 /RXD、S10 /TXD→GP1 RX、GND共有。PIOがUARTを実装する。電圧や物理ピン番号の配線手順ではない。
 次への導入: 次は「でも、どうやって受信する？」で、物理接続と受信プログラムを分けて考える。
 出典:
@@ -360,7 +357,7 @@ layout: default
   <div>
     <p>初期ローダー：<strong>100B</strong></p>
     <p>Sコマンドで16進数を書き込み、Dコマンドで読み返す。</p>
-    <p class="small muted">詳細：Appendix 37</p>
+    <p class="small muted">詳細：Appendix 36</p>
   </div>
   <MediaAsset asset="typing" compact />
 </div>
@@ -370,7 +367,7 @@ layout: default
 <!--
 伝えること: 最初の333B手入力と後の100B化を時系列で示す。
 前からのつながり: 受信プログラム自体を転送できないため、最初の入口を機械語モニターから手入力する。
-技術補足: NECモニターSで変更しDで表示する。具体的なMON画面は素材未提供。所要時間やミス回数は記録がないため記載しない。当初333Bを手入力したことは今回のユーザー提供の開発経緯。文字数は最新文書の従来経路の計算値。MONコード入力のみ813文字、全工程883。BASICのファイルサイズ1420Bと総入力1406文字を混同しない。333BはE400–E54C。後に中継へ再利用する。100Bの入口を追加し333Bコードは変更せず再利用。mini MONコード入力のみ249文字、全工程319文字。BASIC mini7行/757文字。CLEAR/WIDTH、D全バイト確認、DEFUSR/USR、RETURN/CTRL+Bを含む集計。入力時間の実測ではない。小型化は前の通信検証と並行し、後から着手したと断定しない。
+技術補足: NECモニターSで変更しDで表示する。ユーザー提供のMON画面写真を表示。写真はE300番地の表示であり、E400配置の333B版やmini100B版の同一CRCの証拠とはしない。所要時間やミス回数は記録がないため記載しない。当初333Bを手入力したことは今回のユーザー提供の開発経緯。文字数は最新文書の従来経路の計算値。MONコード入力のみ813文字、全工程883。BASICのファイルサイズ1420Bと総入力1406文字を混同しない。333BはE400–E54C。後に中継へ再利用する。100Bの入口を追加し333Bコードは変更せず再利用。mini MONコード入力のみ249文字、全工程319文字。BASIC mini7行/757文字。CLEAR/WIDTH、D全バイト確認、DEFUSR/USR、RETURN/CTRL+Bを含む集計。入力時間の実測ではない。小型化は前の通信検証と並行し、後から着手したと断定しない。
 次への導入: 次は「シリアルローダーの実装」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
@@ -475,9 +472,7 @@ layout: default
     inc de
 ```
 
-<p class="caption">40文字モードでは、さらに1セル進める。</p>
-
-  </div>
+</div>
   <MediaAsset asset="hello" compact />
 </div>
 
@@ -486,7 +481,7 @@ layout: default
 <!--
 伝えること: 44Bの表示プログラムと実機確認結果を示す。
 前からのつながり: 反復可能な経路で、まず文字表示を確認した実機成果を紹介する。
-技術補足: hello.asmの1回目のinc deから2回目のinc deまでの原文抜粋。HLは文字列、DEはVRAM。Cのbit0が0なら40文字で2バイト間隔。44B/CRC ADC1。2026-10-26オペレーターが全文一致、ホストがEXEC/RETURNを確認。動画は未提供なので映像再生成功を主張しない。
+技術補足: hello.asmの1回目のinc deから2回目のinc deまでの原文抜粋。HLは文字列、DEはVRAM。Cのbit0が0なら40文字で2バイト間隔。44B/CRC ADC1。2026-10-26オペレーターが全文一致、ホストがEXEC/RETURNを確認。提供写真にはHELLO FROM ZIG_80 Ver 1.1と表示。写真のバイナリサイズ・CRCは未提供のため、44B/ADC1の過去記録とは分けて扱う。HELLO動画は未提供。
 次への導入: 次は「ORBITAL RINGS」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/hello.asm
@@ -498,7 +493,7 @@ layout: default
 layout: default
 ---
 
-# ORBITAL RINGS
+# リングのアニメーション
 
 <div class="split">
   <div>
@@ -707,7 +702,7 @@ layout: default
 伝えること: ソースへのリンクで本編を終え質疑用Appendixへ案内する。
 前からのつながり: 結果と課題を踏まえて参照先を示し、本編を終えて質疑へ移る。
 技術補足: リンクはGitHub正本。発表HTMLはリンクを開く操作をしなければネット接続不要。QRコードは未提供で生成しない。
-次への導入: 本編は25で終了。質疑では26–44のAppendixを索引から選ぶ。
+次への導入: 本編は25で終了。質疑では26–43のAppendixを索引から選ぶ。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/README.md
 -->

@@ -6,3 +6,7 @@ portable/
 *.zip
 .DS_Store
 .slidev/
+# Camera originals remain local; publish browser-compatible derivatives only.
+public/photos/*.heic
+public/photos/*.HEIC
+public/videos/*.mov

@@ -1,65 +1,52 @@
 # 実機素材台帳と差し替え手順
 
-実機写真・動画は2026-10-28時点で未提供。生成画像・疑似UI・合成チャットを証拠として使わない。
-ファイルとページの対応は `config/media.json` が正本。現在はすべてsrc/posterがnullで明示プレースホルダーを表示する。
+2026-10-29、ユーザー提供の写真7点とリング動画を反映。生成画像・疑似UIは使用しない。
+ページとファイルの正本は `config/media.json`。本編25枚＋Appendix18枚、Gemma専用枠は22枚目。
 
-| 素材キー | スライド | 必要な内容 | 予定ファイル | 状態 |
-|---|---:|---|---|---|
-| pc8001 | 2 | 初代本体・キーボード・CRTの全体。mkIIを代用しない | public/photos/pc8001.jpg | 未提供 |
-| manual | 6 | 初代PC-8001のマニュアルのシリアル通信説明箇所。表紙・版・該当ページを合わせて確認 | public/photos/manual.jpg | 未提供・版/ページ未確定 |
-| connection | 8 | Mac・USBケーブル・Pico 2・PC-8001が接続されている全景 | public/photos/connection.jpg | 未提供 |
-| typing | 13 | 機械語のMON入力と照合画面。旧333Bかmini100Bかを記録 | public/photos/typing.jpg | 未提供 |
-| wiring | 29 | S10とPico 2のコネクタの向き・配線先が分かる実物 | public/photos/wiring.jpg | 未提供 |
-| 検証ログ | 32–36 | USB単体HEALTH、連続通信失敗、成功時のログ画面 | public/photos/usb-check.png 等 | 画像未提供。文書・永続JSON記録から値を引用済み |
-| hello | 17 | HELLO全文が読める実機画面・実行映像 | public/videos/hello.mp4 | 写真・動画とも未提供 |
-| orbital | 18 | 2本のリングと終了表示 | public/videos/orbital.mp4 | 未提供 |
-| gemma | **22のみ** | PC側のキー入力と逐次応答。新旧UIの版を確認 | public/videos/gemma.mp4 | 未提供 |
+| キー | ページ | 公開ファイル | 内容・状態 |
+|---|---:|---|---|
+| pc8001 | 2 | /photos/PC-8001.JPG | 本体・キーボード・CRT、提供済み |
+| manual1 | 6左 | /photos/manual1.jpg | PC-8001 USER’S MANUAL表紙、PC-8101 / PTS-001の表記 |
+| manual2 | 6右 | /photos/manual2.jpg | シリアル入出力・GND/TXD/RXDの端子説明。提供写真にある赤枠を維持 |
+| wiring | 8 | /photos/S10_Pico2.jpg | 内部のS10とPico 2接写。提供写真の矢印を維持 |
+| typing | 13 | /photos/mon_mode.jpg | MONのE300番地表示。100B/333Bの特定版・CRCの証明には使わない |
+| hello | 17 | /photos/hello.jpg | HELLO FROM ZIG_80 Ver 1.1の静止画。動画枠から写真枠へ変更 |
+| orbital | 18 | /videos/orbital.mp4 | リング実機動画、13.94秒、1920×1080、H.264/yuv420p、音声なし |
+| orbitalポスター | 18/PDF | /photos/orbital-poster.jpg | 実動画の1秒位置から抽出 |
+| gemma | **22のみ** | 未提供 | src/poster=null。完成画面・ポスターは他ページへ掲載しない |
+| keyboard | 39 | /photos/keyboard.jpg | SHIFT・ESC・STOP等のキー配置、提供済み |
 
-## 置換する前に
+表紙と本文にPC-8001の表記を確認。マニュアルの版と掲載ページは写真から未確認。
+PC-8001B/mkII等の既存Web資料と同じ冊子とは扱わない。端子表からPicoへの直結可否・電圧を推測しない。
+撮影日、バイナリの版/CRC、撮影条件は未確認。ユーザーの提供・掲載依頼に基づき反映した写真であり、資料制作中に新しい実機試験を行ったという意味ではない。
 
-撮影者、日付、公開許可、対象の型番、UI版、コードサイズ/CRC、モデル名、尺、解像度、音声有無を台帳へ追記する。
-Gemmaは完成した画面を含むので、ポスターも22枚目以外へ置かない。旧UI映像なら1683B等の版を明記して新UIの証拠にしない。
-個人情報や私的な会話内容が写っていないか確認する。提供素材への加工は目的を記録する。
+## 変換と原本
 
-## 差し替え
+HEICはmacOS sipsでJPEGへ変換。写真は全体をcontain表示し、トリミングしない。
+公開JPEGはffmpegの `-map_metadata -1` で撮影位置等のメタデータを除去。
+MOVは映像をH.264、yuv420p、1080pへ変換。元のBT.2020/HLG色情報を保持。
+公開MP4も `-map_metadata -1` で位置等を除去。原本に音声ストリームはない。
 
-1. 写真を `public/photos/`、MP4を `public/videos/` へ置く。英小文字のファイル名とする。
-2. MP4はH.264 / yuv420p、必要な音声はAAC。必要に応じて以下で変換する。
+原本HEIC/MOVはローカルに保持するが、Git・HTML・ポータブル・ソース配布には含めない。
+177MBのMOVの代わりにMP4を配布。`scripts/prune-originals.mjs` が生成distから原本のみ除外する。
+元のPC-8001.JPGは公開用にメタデータ除去したものを管理する。
 
-   ```sh
-   ffmpeg -i input.mov -c:v libx264 -pix_fmt yuv420p -crf 20 \
-     -c:a aac -b:a 160k -movflags +faststart public/videos/gemma.mp4
-   ffmpeg -ss 00:00:01 -i public/videos/gemma.mp4 -frames:v 1 \
-     public/photos/gemma-poster.jpg
-   ```
+## 残る素材
 
-3. `config/media.json` の対象の `src` を `/videos/gemma.mp4` などへ変更。動画は `poster` も `/photos/gemma-poster.jpg` などへ設定する。
-4. `MediaAsset.vue` はsrcがある場合のみSlidevVideoを表示する。controls付き・autoplay=false。空のsrcや存在しないMP4を作らない。
-5. check:content / build / export / thumbnails / build:qa / verify / packageを再実行する。実機素材の再生は実ファイルで別途記録し、合成QAの成功を流用しない。
-6. PDFにポスターが表示されること、独立MP4のファイル名が対応ページに表示されることを確認する。
+- Gemma実機チャットMP4。新旧UI、モデル名、コードCRC、解像度、音声有無を記録する。
+- Mac・USB・Pico 2・PC-8001の接続全景。提供済みS10接写とは別用途。現行8枚目は接写を採用している。
+- HELLO動画は未提供。現行は静止画で完成、必須の差し替えではない。
+- USB/シリアル検証ログのスクリーンショット。現行31–35は文書・JSON記録の抜粋を維持。
+- マニュアルの奥付・版・該当ページ番号。写真や動画に映るコードの版/CRC。
 
-現在の `hello.mp4` 等の表記は予定名。ファイルはまだ存在しない。再生中に素材待ちと誤認しないようsrc設定後に表示も確認する。
+## Gemmaの差し替え
 
-## 検証用の既存資産
+1. `public/videos/gemma.mp4` にH.264/yuv420p（音声が必要ならAAC）を置く。
+2. 実動画からポスターを抽出し `public/photos/gemma-poster.jpg` に置く。
+3. manifestのgemmaだけにsrc/posterを設定。対応ページ22は維持する。
+4. check:content / typecheck / build:qa / package / thumbnails / verify / review:pdfを再実行する。
+5. PDFは動画を再生しない。ポスターとMP4名を表示し、独立MP4を同梱する。
 
-- `public/videos/playback-check.mp4`: ffmpeg color/testsrc2、6秒、H.264、音声なし。合成テスト専用。本編には未使用。
-- `public/videos/placeholder-poster.svg`: 文字のみの検証用ポスター。実機を描いた画像ではない。
-- `components/HardwareTopology.vue`, `FlowDiagram.vue`, `UartFrame.vue`, `MemoryBudget.vue`: ソースに基づく編集可能な概念図。写真や実配線図の代替ではない。
-- フォント: npm同梱Noto Sans JP/IBM Plex Mono。ライセンスを配布物に含める。
-
-ログの値を紹介する32–36枚は「記録の抜粋・要約」と表示。実際のログ画面のスクリーンショットに見せかけない。
-
-## 白背景版で追加した説明図
-
-CassetteFlowは当時の接続の概念、MemoryMapはソフトウェアの配置契約、
-KeyboardMatrix/VramMapはソースに基づくI/O説明図。実機写真・完成UIの代用品ではない。
-新しい写真・動画は追加していない。wiringの実物写真枠はAppendix29へ移動。
-
-## 導入用に追加した撮影素材
-
-- manual（6枚目）：発表者が参照したマニュアルの写真。該当箇所とともに表紙・正式名・版・対象機種・ページを記録する。PC-8001B/mkII等のページを初代所有機の資料として無条件に代用しない。
-- connection（8枚目）：Mac、USBケーブル、Pico 2、PC-8001を含む接続全景。チャットの完成画面を写し込まず、22枚目より前で成果を公開しない。
-- wiring（29枚目、既存）：S10とPicoの端子・方向を確認する近接写真。connectionの全景とは用途が異なる。
-
-manualの正式な冊子と掲載ページは未提供。現時点で照合できたのは、Zig_80文書での初代PC-8001 / S10 / 8251の技術関係。
-S10をマニュアルで見つけた経緯はユーザー提供情報であり、発見日や冊子の具体的な文言は捏造しない。
+`MediaAsset` はSlidevVideo、controls、autoplay=falseを維持。オフライン試験は実動画と合成QAを区別する。
+`playback-check.mp4` は6秒の合成テスト専用で本編には表示しない。
+概念図と実配線写真は区別。フォントはローカル同梱、配布物へライセンスを含める。
