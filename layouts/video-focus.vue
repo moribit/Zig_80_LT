@@ -1,1 +1,1 @@
-<template><div class="slidev-layout"><slot /></div></template>
+<template><div class="slidev-layout video-focus"><slot /></div></template>

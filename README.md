@@ -2,11 +2,11 @@
 
 **47年前のPCでローカルLLMクライアントを動かしてみた**
 
-Webエンジニア向けに、Zig_80によるPC-8001実機開発を説明する本編25枚＋Appendix18枚（全43枚）のSlidevプレゼンテーション。
+Webエンジニア向けに、Zig_80によるPC-8001実機開発を説明する本編26枚＋Appendix18枚（全44枚）のSlidevプレゼンテーション。
 当時のN-BASIC・カセット保存から、転送・デプロイ、実機成果、LLMクライアントへ進む。通信障害の詳細はAppendix。
 スライドは仕様・処理・条件・結果を提示し、開発経緯は発表者ノートで補足する。
-完成したGemmaチャット画面・映像・サムネイルを見せる場所は22枚目のみ。
-実機写真7点とORBITAL RINGS動画を反映済み。Gemma動画は未提供のため22枚目のプレースホルダーを維持。
+完成したGemmaチャット画面・映像・サムネイルを見せる場所は23枚目のみ。
+実機写真7点とORBITAL RINGS / Gemmaの実機動画を反映済み。3枚目はキーボードの写真、Gemmaデモは23枚目。
 
 ## 開発と検証
 
@@ -41,7 +41,7 @@ packageはbuild/exportを再実行し、生成フォルダーportable/を作り�
 
 ## 構成
 
-- `slides.md`: 本編25枚。`appendix.md`: 26–43の補足18枚、全ページの5項目ノートと固定コミット出典。
+- `slides.md`: 本編26枚。`appendix.md`: 27–44の補足18枚、全ページの5項目ノートと固定コミット出典。
 - `outline.md`: 本編5章・Appendixと各ページの目的。Slidevには読み込まない。
 - `docs/deck.json`: ページ数・章・タイトル・成果初出の検証用メタデータ。
 - `styles/theme.css`: 1100×618.75、16:9。本文26px、見出し42px、タイトル53pxの白背景・黒文字のテーマ。
@@ -90,7 +90,7 @@ PPTXで再生可能な動画が保持されない前提とし、本番形式に�
 
 ## 視覚レビュー
 
-1. build/export/thumbnailsを実行。PDF43ページ、PNG43枚を確認。
+1. build/export/thumbnailsを実行。PDF44ページ、PNG44枚を確認。
 2. build:qa/verifyで全ページの1920×1080スクリーンショットを生成。
 3. `artifacts/contact-sheet.html` または `artifacts/contact-sheet.png` で本編5章とAppendixの流れを見る。`chapter-1.png`〜`chapter-6.png`も生成。
 4. `artifacts/browser/slide-N.png` を原寸で開き、全ページの折返し・余白・図・コード・素材領域を確認する。自動のはみ出し検査だけで見た目の合格としない。
@@ -105,30 +105,30 @@ OSネットワーク断・会場機器・未提供の実機MP4を検証済みと
 
 - `artifacts/zig80-lt-source.tar.gz`: 開発ソース、全ノート、資料、検証スクリプト。
 - `dist/`: 発表用静的HTML。ノートなし。
-- `artifacts/zig80-lt.pdf`: 43ページのバックアップPDF。
+- `artifacts/zig80-lt.pdf`: 44ページのバックアップPDF。
 - `artifacts/zig80-lt-portable.tar.gz`: dist、PDF、独立MP4（提供済みのみ）、media-index.json、起動手順・サーバー、ライセンス。
 
-HELLOは17枚目の静止画。実機動画の対応はORBITAL=18、Gemma=22。未提供状態はmedia-index.jsonにavailable=falseとして残す。
+HELLOは18枚目の静止画。実機動画の対応はORBITAL=19、Gemma=23。両MP4を独立ファイルとして配布する。
 GitHub正本: https://github.com/moribit/Zig_80 。この発表は独立リポジトリ https://github.com/moribit/Zig_80_LT で管理する。
 
 ## 本編終了と質疑
 
-本編は25枚目のGitHubリンクで終了。通常の次ページ操作は25→26で停止する。
-Appendixは25枚目の索引リンク、目次、またはURL `/26`〜`/43` で選ぶ。
-発表者画面の次操作も同じ境界で停止する。PDF/サムネイルには全43枚を含む。
-26–28:メモリ、29–30:UART/PIO、31–35:障害と通信試験、36–37:導入とプロトコル、
-38–41:入力と描画、42:HTTP、43:実機記録。各ページの詳細はoutline.md。
+本編は26枚目のGitHubリンクで終了。通常の次ページ操作は26→27で停止する。
+Appendixは26枚目の索引リンク、目次、またはURL `/27`〜`/44` で選ぶ。
+発表者画面の次操作も同じ境界で停止する。PDF/サムネイルには全44枚を含む。
+27–29:メモリ、30–31:UART/PIO、32–36:障害と通信試験、37–38:導入とプロトコル、
+39–42:入力と描画、43:HTTP、44:実機記録。各ページの詳細はoutline.md。
 
 BASICとカセットの説明は当時の手法を示す教材例で、今回の実機保存の記録ではない。
 2KBはmemory profile v1の転送許可領域であり、PC本体のRAM容量やハード上限ではない。
 
 導入は当時の編集・保存から、マニュアルでのシリアル発見、Mac/Pico接続へ進む。
-メッセージ専用レイアウトを使ったページはフッターを省略。manual1/manual2（6）は表紙と端子説明を左右に表示。wiring（8）は近接配線、keyboard（39）は実物キー配置。接続全景は未提供。
+メッセージ専用レイアウトを使ったページはフッターを省略。manual1/manual2（7）は表紙と端子説明を左右に表示。wiring（9）は近接配線、keyboard（3）とkeyboard-detail（40）は実物キー配置。接続全景は未提供。
 マニュアルの冊子/版/該当ページは素材提供時に確認する。
 
 ## AppendixとHTML整形
 
-26ページ以降は `appendix.md` にまとめ、`slides.md` の末尾の `src: ./appendix.md` で読み込む。
+27ページ以降は `appendix.md` にまとめ、`slides.md` の末尾の `src: ./appendix.md` で読み込む。
 ページを追加・移動した場合はoutline / deck.json / media.json / AppendixLinksを同期する。
 `check:content` はSlidev公式パーサーで外部ファイルを展開し、全ページを検査する。
 

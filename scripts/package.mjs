@@ -34,5 +34,5 @@ await mkdir('portable/licenses',{recursive:true});
 for(const [name,file] of [['noto-sans-jp','node_modules/@fontsource-variable/noto-sans-jp/LICENSE'],['ibm-plex-mono','node_modules/@fontsource/ibm-plex-mono/LICENSE']])await cp(file,`portable/licenses/${name}.txt`);
 execFileSync('tar',['-czf','artifacts/zig80-lt-portable.tar.gz','portable'],{stdio:'inherit'});
 const source=['README.md','.gitignore','.npmrc','package.json','package-lock.json','tsconfig.json','env.d.ts','slides.md','appendix.md','.prettierrc.json','outline.md','media-check.md','styles','layouts','setup','components','config','public','scripts','docs'];
-execFileSync('tar',['--exclude=*.heic','--exclude=*.HEIC','--exclude=*.mov','-czf','artifacts/zig80-lt-source.tar.gz',...source],{stdio:'inherit'});
+execFileSync('tar',['--exclude=*.heic','--exclude=*.HEIC','--exclude=*.mov','--exclude=*.MOV','-czf','artifacts/zig80-lt-source.tar.gz',...source],{stdio:'inherit'});
 console.log('artifacts/zig80-lt-portable.tar.gz + artifacts/zig80-lt-source.tar.gz');

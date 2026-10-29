@@ -13,7 +13,7 @@
     "hint": "MON入力と全バイトの照合が分かる実機写真",
     "src": "/photos/mon_mode.jpg",
     "poster": null,
-    "slide": 13
+    "slide": 14
   },
   "wiring": {
     "kind": "photo",
@@ -21,7 +21,7 @@
     "hint": "コネクタの向きと接続先を確認できる実物写真",
     "src": "/photos/S10_Pico2.jpg",
     "poster": null,
-    "slide": 8
+    "slide": 9
   },
   "hello": {
     "kind": "photo",
@@ -29,7 +29,7 @@
     "hint": "HELLO FROM ZIG_80 Ver 1.1の表示写真",
     "src": "/photos/hello.jpg",
     "poster": null,
-    "slide": 17
+    "slide": 18
   },
   "orbital": {
     "kind": "video",
@@ -37,15 +37,15 @@
     "hint": "2本のリングの動きと終了表示を撮影したMP4",
     "src": "/videos/orbital.mp4",
     "poster": "/photos/orbital-poster.jpg",
-    "slide": 18
+    "slide": 19
   },
   "gemma": {
     "kind": "video",
     "title": "PC-8001 × Gemma 実機チャット",
     "hint": "PC側のキー入力と、返答が届く様子を撮影したMP4",
-    "src": null,
-    "poster": null,
-    "slide": 22
+    "src": "/videos/gemma.mp4",
+    "poster": "/photos/gemma-poster.jpg",
+    "slide": 23
   },
   "manual1": {
     "kind": "photo",
@@ -53,7 +53,7 @@
     "hint": "ユーザー提供の冊子写真",
     "src": "/photos/manual1.jpg",
     "poster": null,
-    "slide": 6
+    "slide": 7
   },
   "manual2": {
     "kind": "photo",
@@ -61,7 +61,7 @@
     "hint": "ユーザー提供の該当箇所写真",
     "src": "/photos/manual2.jpg",
     "poster": null,
-    "slide": 6
+    "slide": 7
   },
   "keyboard": {
     "kind": "photo",
@@ -69,6 +69,14 @@
     "hint": "SHIFT・ESC・STOP等の実物配置",
     "src": "/photos/keyboard.jpg",
     "poster": null,
-    "slide": 39
+    "slide": 3
+  },
+  "keyboard-detail": {
+    "kind": "photo",
+    "title": "PC-8001のキーボード",
+    "hint": "SHIFT・ESC・STOP等の実物配置",
+    "src": "/photos/keyboard.jpg",
+    "poster": null,
+    "slide": 40
   }
 }

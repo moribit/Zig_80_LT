@@ -10,3 +10,4 @@ portable/
 public/photos/*.heic
 public/photos/*.HEIC
 public/videos/*.mov
+public/videos/*.MOV

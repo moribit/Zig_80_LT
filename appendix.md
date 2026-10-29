@@ -13,17 +13,17 @@ hideInToc: true
     </p>
     <p>ローダーとBASIC等の<br />領域を保護する。</p>
     <p class="muted">2KBは現在の設計上の制限。<br />ハードの上限ではない。</p>
-    <p class="small muted"><code>CLEAR 300,&HCFFF</code>でBASIC領域を制限。詳細はAppendix 28。</p>
+    <p class="small muted"><code>CLEAR 300,&HCFFF</code>でBASIC領域を制限。詳細はAppendix 29。</p>
   </div>
 </div>
 
-<SlideFooter :number="26" chapter="Appendix" />
+<SlideFooter :number="27" chapter="Appendix" />
 
 <!--
 伝えること: 2KBがハード上限ではなく転送プロファイルの設計制限だと説明する。
 前からのつながり: データの流れに加え、実機側プログラムが置けるメモリ範囲を明らかにする。
 技術補足: memory profile v1の保守的な転送境界。D800–DCFFは常駐固定1280B、E400–E5FFは中継予約、E600以降はバッファ/スタック/状態でE900以上は全域転送禁止。DD00–E3FFの一部に手入力mini E300–E363が置かれるが通常deploy対象ではない。CLEAR成功とE400読書検証などが導入条件。ハードの絶対上限ではなく、拡大は所有機のRAM/BASICワークを調べ別プロファイルにする。転送制限はMMUや実行時サンドボックスではない。図はアドレス昇順、各帯の高さは縮尺外。
-次への導入: 次は「2KBに収めたZ80アプリ」。
+次への導入: 次は「Appendix：2KBに収めたZ80アプリ」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-memory-map.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/loader/layout.inc
@@ -45,13 +45,13 @@ hideInToc: true
   Bはコード・テーブル等を含む転送イメージ。<br />未割当94 Bのうち、コード直後の空きは70 B。
 </p>
 
-<SlideFooter :number="27" chapter="Appendix" />
+<SlideFooter :number="28" chapter="Appendix" />
 
 <!--
 伝えること: 1743Bと211Bと94Bの配分を示す。
 前からのつながり: 2KBという設計制限の中に、コードと作業用データをどう配置したかを示す。
 技術補足: D000–D6CE 1743B、D6CF–D714 70B空き、TX35B、前回RX37B、key10B、状態28B、prompt64B、RX37B=211B。D767–D76Fの9BとD7F1–D7FFの15Bも未割当で計94B。1743+211+94=2048。スタックE700–E7FFは常駐の既存256Bで、この2048へ加算する数値ではない。
-次への導入: 次は「PC-8001のチャットUI」。
+次への導入: 次は「Appendix：詳細メモリマップ」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/chat.asm
@@ -82,7 +82,7 @@ CLEAR 300,&HCFFF
   </div>
 </div>
 
-<SlideFooter :number="28" chapter="Appendix" />
+<SlideFooter :number="29" chapter="Appendix" />
 
 <!--
 伝えること: CLEAR予約と転送許可範囲とABIを詳述する。
@@ -116,11 +116,11 @@ hideInToc: true
   </div>
 </div>
 
-<SlideFooter :number="29" chapter="Appendix" />
+<SlideFooter :number="30" chapter="Appendix" />
 
 <!--
 伝えること: 8N1と反転極性と理論転送量を示す。
-前からのつながり: 本編8の実物配線を踏まえ、UARTフレームの詳細を示す。
+前からのつながり: 本編9の実物配線を踏まえ、UARTフレームの詳細を示す。
 技術補足: 8N1はstart1+data8+stop1=10bit。30B/sは線路上の理論上限でありpayload速度や推論速度ではない。TX/RXは反転モード。外部反転回路との二重反転に注意。
 次への導入: 次は「Appendix：PIOによるUART実装」。
 出典:
@@ -160,7 +160,7 @@ bits:
   </div>
 </div>
 
-<SlideFooter :number="30" chapter="Appendix" />
+<SlideFooter :number="31" chapter="Appendix" />
 
 <!--
 伝えること: PicoのPIOとホスト接続の関係を示す。
@@ -195,7 +195,7 @@ hideInToc: true
 </div>
 <p class="takeaway">PCのローダーやUART信号を必要としない再現条件を確認。</p>
 
-<SlideFooter :number="31" chapter="Appendix" />
+<SlideFooter :number="32" chapter="Appendix" />
 
 <!--
 伝えること: USB単体での停止条件と観測値を示す。
@@ -228,7 +228,7 @@ hideInToc: true
 </div>
 <p class="caption">SDK内部の停止箇所・根本原因は未確定。長時間の無再発を保証しない。</p>
 
-<SlideFooter :number="32" chapter="Appendix" />
+<SlideFooter :number="33" chapter="Appendix" />
 
 <!--
 伝えること: 待機処理変更と120秒の測定条件を示す。
@@ -259,7 +259,7 @@ hideInToc: true
 </div>
 <p class="takeaway">単体ループバックは追加idleあり。隙間なし条件は未検証だった。</p>
 
-<SlideFooter :number="33" chapter="Appendix" />
+<SlideFooter :number="34" chapter="Appendix" />
 
 <!--
 伝えること: 185B一致後のフレーミングエラーを示す。
@@ -291,7 +291,7 @@ hideInToc: true
 </div>
 <p class="caption">300bps・8N1・TX側は維持。モデルでの検証結果であり、実機確認は次ページ。</p>
 
-<SlideFooter :number="34" chapter="Appendix" />
+<SlideFooter :number="35" chapter="Appendix" />
 
 <!--
 伝えること: モデルでの再現と40条件での改善を示す。
@@ -321,7 +321,7 @@ hideInToc: true
   </div>
 </div>
 
-<SlideFooter :number="35" chapter="Appendix" />
+<SlideFooter :number="36" chapter="Appendix" />
 
 <!--
 伝えること: 256B往復一致と測定区間を示す。
@@ -349,7 +349,7 @@ hideInToc: true
   B。
 </p>
 
-<SlideFooter :number="36" chapter="Appendix" />
+<SlideFooter :number="37" chapter="Appendix" />
 
 <!--
 伝えること: 100Bの入口から常駐を導入するサイズと配置を示す。
@@ -390,7 +390,7 @@ hideInToc: true
 </div>
 <p class="caption">チャットにNAKはなく、不正フレームは破棄。CRC-16/CCITT-FALSE。</p>
 
-<SlideFooter :number="37" chapter="Appendix" />
+<SlideFooter :number="38" chapter="Appendix" />
 
 <!--
 伝えること: ローダーとチャットの信頼性制御を区別する。
@@ -433,7 +433,7 @@ key_row:
   </div>
 </div>
 
-<SlideFooter :number="38" chapter="Appendix" />
+<SlideFooter :number="39" chapter="Appendix" />
 
 <!--
 伝えること: I/O読取とactive-lowと立ち上がり抽出を実コードで説明する。
@@ -454,7 +454,7 @@ hideInToc: true
 
 <div class="split keyboard-photo-layout">
   <div>
-    <MediaAsset asset="keyboard" compact />
+    <MediaAsset asset="keyboard-detail" compact />
 
 ```asm
     in a,(8)
@@ -478,7 +478,7 @@ hideInToc: true
 </div>
 <p class="caption">旧UIの実機ESC復帰を、新UIの確認済み結果として流用しない。</p>
 
-<SlideFooter :number="39" chapter="Appendix" />
+<SlideFooter :number="40" chapter="Appendix" />
 
 <!--
 伝えること: SHIFT変換と入力遅延とESC/STOPの扱いを示す。
@@ -517,7 +517,7 @@ hideInToc: true
   </div>
 </div>
 
-<SlideFooter :number="40" chapter="Appendix" />
+<SlideFooter :number="41" chapter="Appendix" />
 
 <!--
 伝えること: 行120Bの文字と属性を分け座標からの書込先を示す。
@@ -577,7 +577,7 @@ hideInToc: true
 </div>
 <p class="caption">初期29B HELLOの表示不一致 → 40/80対応44Bへ修正。実機80文字モードは未確認。</p>
 
-<SlideFooter :number="41" chapter="Appendix" />
+<SlideFooter :number="42" chapter="Appendix" />
 
 <!--
 伝えること: 表示モードの読取と文字間隔とCRTC座標を説明する。
@@ -614,7 +614,7 @@ hideInToc: true
 </div>
 <p class="caption">送信・ACK待ちの間はHTTP読出しを停止。未ACK分はキューに保持。</p>
 
-<SlideFooter :number="42" chapter="Appendix" />
+<SlideFooter :number="43" chapter="Appendix" />
 
 <!--
 伝えること: HTTP逐次受信と低速UARTの流量制御を説明する。
@@ -659,13 +659,13 @@ hideInToc: true
 <p class="takeaway">新UIでは<strong>入力欄を固定</strong>し、会話だけをスクロール。</p>
 <p class="caption">2026-10-27の記録時点。新UIも30分耐久・実機80文字モードは未確認。</p>
 
-<SlideFooter :number="43" chapter="Appendix" />
+<SlideFooter :number="44" chapter="Appendix" />
 
 <!--
 伝えること: 新旧UIの成功範囲と未確認を区別する。
 前からのつながり: 前ページ「Appendix：HTTPとバックプレッシャー」の説明を受ける。
 技術補足: 旧UI1683B/F1A3は10往復・ESC・HELLO/ABORT・TX解放。新UI1743B/B9A6は5往復の記録時点で継続中、ESC未操作。モデルでの15往復・復帰試験を新UIの物理実測と混同しない。UIそのものの絵やサムネイルはまだ出さない。Zig製の2パスアセンブラ、Z80 CPU、CLI/TUIを提供。PC8001の検証は専用テストの8251/CRTC等モデル。汎用CLI runへhello.binを渡すだけでPC8001実機を再現するとは言わない。Mini Invaders1361Bの左右/SPACE動作を実機確認。ESC等はモデル検証と分ける。チャットはROMや割り込みに頼らずactive-lowキーマトリクスを直接走査し、Shift、削除、64B入力を扱う。完成UIの画像はまだ出さない。
-次への導入: 質疑に応じて25の索引へ戻る。
+次への導入: 質疑に応じて26の索引へ戻る。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-screen20-014.json
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json

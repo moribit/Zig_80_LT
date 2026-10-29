@@ -2,7 +2,7 @@
 theme: default
 favicon: /favicon.svg
 title: 47年前のPCでローカルLLMクライアントを動かしてみた
-info: Zig_80 PC-8001実機開発の物語 / 本編25枚 / Appendix18枚
+info: Zig_80 PC-8001実機開発の物語 / 本編26枚 / Appendix18枚
 aspectRatio: 16/9
 canvasWidth: 1100
 colorSchema: light
@@ -93,7 +93,7 @@ layout: default
 前からのつながり: まず対象のPCを共有し、現代の開発環境との前提の違いを説明する。
 技術補足: CPUはμPD780C-1、Z80互換。標準RAM16KBは機種仕様であり所有機の増設量は未確認。ユーザー提供の本体・CRT写真を表示する。写真からRAM容量を推定しない。
 仕様補足: NEC公式製品情報のCPUクロック欄は型番末尾と周波数が連結されている。μPD780C-1 / 4 MHzとして科学館資料でも照合。ROM24 KB、N-BASIC、代表的な40/80文字・20/25行、8251は以下の資料で確認。PC-8001B資料は補助資料とし、初代所有機との差を自動的に同一視しない。
-次への導入: 次は「N-BASICでのプログラム開発」。
+次への導入: 次は「キーボード」で実物の入力機器を紹介する。
 出典:
 - https://www.kahaku.go.jp/exhibitions/vm/past_parmanent/rikou/computer/pc8001.html
 - https://support.nec-lavie.jp/support/product/data/spec/cpu/b020-1.html
@@ -102,6 +102,28 @@ layout: default
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 - https://oldcrap.org/wp-content/uploads/2024/07/nec-pc8001b-users-manual.pdf
 - https://www.sci-museum.jp/wp-content/themes/scimuseum2021/uploads/publication/73_pdf.pdf
+-->
+
+---
+layout: default
+---
+
+# キーボード
+
+<div class="keyboard-overview">
+  <MediaAsset asset="keyboard" />
+</div>
+
+<SlideFooter :number="3" chapter="01 / 1979年の開発環境" />
+
+<!--
+伝えること: PC-8001のキーボードを実物写真で紹介する。
+前からのつながり: 本体の仕様を確認した後、プログラムを入力するキーボードを見る。
+技術補足: ユーザー提供のkeyboard写真。SHIFT・ESC・STOP等の物理配置を示す。キー走査の実装はAppendixで説明し、写真だけから回路仕様を推測しない。
+口頭補足: このキーボードでBASICの行や機械語を入力する。次のページで当時の編集操作を紹介する。
+次への導入: 次は「N-BASICでのプログラム開発」。
+出典:
+- public/photos/keyboard.jpg（ユーザー提供写真）
 -->
 
 ---
@@ -133,7 +155,7 @@ RUN
 </div>
 <p class="takeaway">ソースファイルを開く代わりに、メモリ上の行を直接更新する。</p>
 
-<SlideFooter :number="3" chapter="01 / 1979年の開発環境" />
+<SlideFooter :number="4" chapter="01 / 1979年の開発環境" />
 
 <!--
 伝えること: 行番号でRAM上のプログラムを編集しLISTとRUNを使い分ける。
@@ -167,13 +189,13 @@ CLOAD "HELLO" //テープの"HELLO"をロード
   </div>
 </div>
 
-<SlideFooter :number="4" chapter="01 / 1979年の開発環境" />
+<SlideFooter :number="5" chapter="01 / 1979年の開発環境" />
 
 <!--
 伝えること: 当時のBASIC保存を今回のシリアル転送と区別する。
 前からのつながり: 前ページのプログラムはRAM上なので、電源断に備える保存先が必要になる。
 技術補足: NEC User’s Manual PC-8001B版のPDF13頁がレコーダー接続、52–54頁（誌面47–49）がCLOAD/CSAVE。BASICのプログラム保存とMONのW/Lによる機械語保存・ロードを区別する。今回bootstrap記録は音声ケーブル未用意、CMT/WAV生成はソフト検証済みだが物理ロードは未確認。CSAVE/CLOADのファイル名は先頭6文字を使用。HELLOは独自例。接続図は論理的な音声の流れで端子配線図ではない。
-次への導入: 次は「とても大変。」。
+次への導入: 次は「割りと大変」。
 出典:
 - https://oldcrap.org/wp-content/uploads/2024/07/nec-pc8001b-users-manual.pdf
 - https://archive.org/details/pc-8001b-n-basic-reference-manual-nec-en-1981
@@ -209,14 +231,14 @@ layout: default
   <MediaAsset asset="manual2" />
 </div>
 
-<SlideFooter :number="6" chapter="01 / 1979年の開発環境" />
+<SlideFooter :number="7" chapter="01 / 1979年の開発環境" />
 
 <!--
 伝えること: マニュアルでS10に着目した経緯とシリアル通信の存在を紹介する。
 前からのつながり: 操作の手間から、別の入力・転送経路を探す話へつなぐ。
 技術補足: マニュアルを見てS10に着目したという経緯は今回のユーザー提供情報。発見日・場所は未提供。提供写真の表紙はPC-8001 USER’S MANUAL / PC-8101 / PTS-001。写真2にはPC-8001、PC-8062ケーブル、GND/TXD/RXDの端子説明が写る。版・掲載ページは未確認。S10と8251を使う初代PC-8001の技術関係はZig_80 serial-validationの初代対象記述と実機記録で照合。NEC原本回路の完全照合は元文書でも未完了。既存のPC-8001B User’s Manual参照を、所有機のマニュアル写真やS10端子図の証拠に転用しない。提供写真は初代PC-8001表記を確認。写真の端子表だけでPicoへの直結可否や電圧を判断しない。
 口頭補足: 当時の操作手順を紹介した後、マニュアルを読みシリアル通信に着目した経緯へ移る。
-次への導入: 次は「これで通信できたら、色々できそう！」。
+次への導入: 次は「これで通信できたら色々できそう！」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 -->
@@ -232,7 +254,7 @@ layout: message
 前からのつながり: S10とシリアル通信の存在を知り、Macと通信する用途を考える。
 技術補足: 可能性を考えたという発表上の展開。実機通信がこの時点で成功していたと解釈させない。具体的な日付や別の試作品は追加しない。
 口頭補足: PC単体で編集する代わりに、普段使うMacを編集・ビルドの環境として使えるのではと考えた、という展開を話す。ここは通信成功の報告ではなく、接続を構想する段階。完成チャットへの発展は後半で説明する。
-次への導入: 次は「MacとPC-8001を接続する」。
+次への導入: 次は「PC-8001(S10)とRaspberryPi Pico2」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 -->
@@ -251,13 +273,13 @@ layout: default
   <MediaAsset asset="wiring" compact />
 </div>
 
-<SlideFooter :number="8" chapter="02 / 現代のビルドとデプロイ" />
+<SlideFooter :number="9" chapter="02 / 現代のビルドとデプロイ" />
 
 <!--
 伝えること: S10の論理信号と物理配線の区別を示す。
 前からのつながり: Macとの通信を考え、S10とPico 2の実物接続を示す。
 技術補足: 公開資料のTTL反転信号に基づき実機条件を確認する。物理ピン番号、電圧、向きの推測図は作らない。UARTは8251。候補接続表と所有機の実測を区別する。
-次への導入: 次はMac・USB・Pico 2・PC-8001の構成図で役割を整理する。
+次への導入: 次は「MacとPC-8001の接続構成」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 -->
@@ -270,13 +292,13 @@ layout: default
 
 <ConnectionTopology />
 
-<SlideFooter :number="9" chapter="02 / 現代のビルドとデプロイ" />
+<SlideFooter :number="10" chapter="02 / 現代のビルドとデプロイ" />
 
 <!--
 伝えること: USBとS10の間をPico 2で橋渡しする構成と機器の役割を示す。
 前からのつながり: 前ページはS10とPico 2の接写。ここでは機器ごとの担当を図で整理する。
 技術補足: 図は論理構成。Pico GP0 TX→S10 /RXD、S10 /TXD→GP1 RX、GND共有。PIOがUARTを実装する。電圧や物理ピン番号の配線手順ではない。
-次への導入: 次は「でも、どうやって受信する？」で、物理接続と受信プログラムを分けて考える。
+次への導入: 次は「でも、どうやって任意のプログラムを実行するか？」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-validation.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
@@ -300,7 +322,7 @@ PC-8001側に、シリアル通信で受信したデータをRAMへ配置する�
 ところが、その受信プログラム自体を転送する手段がありません。
 
 そこで、最初の受信プログラムだけは機械語モニターから手入力しました。
-次への導入: 次は「最初は機械語を直接入力」で、初期333Bから100Bへ改善した入口を説明する。
+次への導入: 次は「プログラムをロード・実行する仕組みが必要」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
@@ -316,7 +338,7 @@ layout: message
 伝えること: 物理接続に加え実機側の受信・実行コードが必要だと示す。
 前からのつながり: でも、どうやって任意のプログラムを実行するか？の説明を受けて次の実装へ進む。
 技術補足: 発表上の導入。新たな実機成功・計測値を追加しない。
-次への導入: 次の実装・確認結果を説明する。
+次への導入: 次は「シリアル通信でのローダーの実装」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 -->
@@ -333,13 +355,13 @@ layout: default
 <p>ローダーは、実機側で動く「受信・実行」のプログラム。</p>
 <p class="muted">初回導入後は、アプリのソース修正と再転送を繰り返せる。</p>
 
-<SlideFooter :number="12" chapter="02 / 現代のビルドとデプロイ" />
+<SlideFooter :number="13" chapter="02 / 現代のビルドとデプロイ" />
 
 <!--
 伝えること: PC側の受信プログラムでデプロイを可能にする。
 前からのつながり: 手入力した小さな受信コードから次段を導入し、アプリを転送できる状態へ進む。
 技術補足: miniはREADY37hを送り333B+SUM8を受信する。SUM8はCRC16より弱く複数誤りや順序交換をすべて検知しない。中継は旧stage0.asm、常駐はstage1.asmという互換ファイル名。実コード1134+ゼロ埋め146=1280。常駐のスタックE700–E7FFはアプリ2KBとは別。E900以降は転送禁止。
-次への導入: 次は「Zig_80による開発・デプロイ」。
+次への導入: 次は「最初は機械語を直接入力」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-memory-map.md
@@ -357,18 +379,18 @@ layout: default
   <div>
     <p>初期ローダー：<strong>100B</strong></p>
     <p>Sコマンドで16進数を書き込み、Dコマンドで読み返す。</p>
-    <p class="small muted">詳細：Appendix 36</p>
+    <p class="small muted">詳細：Appendix 37</p>
   </div>
   <MediaAsset asset="typing" compact />
 </div>
 
-<SlideFooter :number="13" chapter="02 / 現代のビルドとデプロイ" />
+<SlideFooter :number="14" chapter="02 / 現代のビルドとデプロイ" />
 
 <!--
 伝えること: 最初の333B手入力と後の100B化を時系列で示す。
 前からのつながり: 受信プログラム自体を転送できないため、最初の入口を機械語モニターから手入力する。
 技術補足: NECモニターSで変更しDで表示する。ユーザー提供のMON画面写真を表示。写真はE300番地の表示であり、E400配置の333B版やmini100B版の同一CRCの証拠とはしない。所要時間やミス回数は記録がないため記載しない。当初333Bを手入力したことは今回のユーザー提供の開発経緯。文字数は最新文書の従来経路の計算値。MONコード入力のみ813文字、全工程883。BASICのファイルサイズ1420Bと総入力1406文字を混同しない。333BはE400–E54C。後に中継へ再利用する。100Bの入口を追加し333Bコードは変更せず再利用。mini MONコード入力のみ249文字、全工程319文字。BASIC mini7行/757文字。CLEAR/WIDTH、D全バイト確認、DEFUSR/USR、RETURN/CTRL+Bを含む集計。入力時間の実測ではない。小型化は前の通信検証と並行し、後から着手したと断定しない。
-次への導入: 次は「シリアルローダーの実装」。
+次への導入: 次は「Zig_80による開発・デプロイ」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
@@ -394,7 +416,7 @@ zig-out/bin/zig80 deploy zig-out/pc8001/hello.bin \
 
 <p class="caption">ポートは実際のデバイスへ置換。送信フラグは実機の電気条件確認後に指定する。</p>
 
-<SlideFooter :number="14" chapter="02 / 現代のビルドとデプロイ" />
+<SlideFooter :number="15" chapter="02 / 現代のビルドとデプロイ" />
 
 <!--
 伝えること: Macで編集したZ80ソースをビルドし実機へデプロイする目標とCLI手順を示す。
@@ -426,13 +448,13 @@ layout: default
   <li>アプリがローダーやスタックを破壊する可能性はある。</li>
 </ul>
 
-<SlideFooter :number="15" chapter="02 / 現代のビルドとデプロイ" />
+<SlideFooter :number="16" chapter="02 / 現代のビルドとデプロイ" />
 
 <!--
 伝えること: 常駐ローダーに戻ることで反復できる条件を示す。
 前からのつながり: コマンドを用意した後は、アプリからローダーへ戻って次を試す流れを示す。
 技術補足: 初回はCLEAR/MON→mini→中継→常駐。通常deployは既定stage1（常駐）を使う。再EXECは再VERIFYが必要。常駐はRAMのプログラムで電源断後に保持されるという意味ではない。helloからORBITALへの差し替えで実機の反復を確認。
-次への導入: 次は「HELLOプログラム」。
+次への導入: 次は「まずはHELLOを表示してみる」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-serial-loader.md
@@ -449,7 +471,7 @@ layout: message
 伝えること: 転送の仕組みを使った最初の文字表示へ導入する。
 前からのつながり: 実機で繰り返し実行するの説明を受けて次の実装へ進む。
 技術補足: 発表上の導入。新たな実機成功・計測値を追加しない。
-次への導入: 次の実装・確認結果を説明する。
+次への導入: 次は「HELLOプログラム」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 -->
@@ -476,13 +498,13 @@ layout: default
   <MediaAsset asset="hello" compact />
 </div>
 
-<SlideFooter :number="17" chapter="03 / 実機アプリの成果" />
+<SlideFooter :number="18" chapter="03 / 実機アプリの成果" />
 
 <!--
 伝えること: 44Bの表示プログラムと実機確認結果を示す。
 前からのつながり: 反復可能な経路で、まず文字表示を確認した実機成果を紹介する。
 技術補足: hello.asmの1回目のinc deから2回目のinc deまでの原文抜粋。HLは文字列、DEはVRAM。Cのbit0が0なら40文字で2バイト間隔。44B/CRC ADC1。2026-10-26オペレーターが全文一致、ホストがEXEC/RETURNを確認。提供写真にはHELLO FROM ZIG_80 Ver 1.1と表示。写真のバイナリサイズ・CRCは未提供のため、44B/ADC1の過去記録とは分けて扱う。HELLO動画は未提供。
-次への導入: 次は「ORBITAL RINGS」。
+次への導入: 次は「リングのアニメーション」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/hello.asm
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-bootstrap.md
@@ -508,13 +530,13 @@ layout: default
   <MediaAsset asset="orbital" compact />
 </div>
 
-<SlideFooter :number="18" chapter="03 / 実機アプリの成果" />
+<SlideFooter :number="19" chapter="03 / 実機アプリの成果" />
 
 <!--
 伝えること: 582Bの描画デモと実機確認結果を示す。
 前からのつながり: 文字表示と転送を確認できたので、次は連続した画面更新を試す。
 技術補足: コードD000–D245、状態D4E0–D4E5、属性保存640B D500–D77F。582Bだけが全RAM使用量という意味ではない。実機CRC A9DB、復帰A52h、ユーザーがリングと終了表示を確認。属性全バイト復元・保護領域保持はCPUモデル検証。約14.277秒はEXEC ACKから復帰通知までで純粋な描画時間ではない。
-次への導入: 次は「入力・表示・通信を組み合わせる」。
+次への導入: 次は「プログラムの転送以外にアプリでもシリアル通信が使えると楽しそう」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-demos.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/examples/pc8001/orbital_rings.asm
@@ -531,7 +553,7 @@ layout: message
 伝えること: デプロイ以外のアプリ内通信へ用途を広げる。
 前からのつながり: ORBITAL RINGSの説明を受けて次の実装へ進む。
 技術補足: 発表上の導入。新たな実機成功・計測値を追加しない。
-次への導入: 次の実装・確認結果を説明する。
+次への導入: 次は「チャットができるようにしてみよう」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 -->
@@ -546,7 +568,7 @@ layout: message
 伝えること: 入力・表示・通信を組み合わせたチャット端末へつなぐ。
 前からのつながり: プログラムの転送以外にアプリでもシリアル通信が使えると楽しそうの説明を受けて次の実装へ進む。
 技術補足: 発表上の導入。新たな実機成功・計測値を追加しない。
-次への導入: 次の実装・確認結果を説明する。
+次への導入: 次は「PC-8001とローカルLLMの接続」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 -->
@@ -561,13 +583,13 @@ layout: default
 <p class="takeaway">Gemmaの推論はMac上。PC-8001ではクライアントが動く。</p>
 <p class="caption">MacのZigホスト：HTTP接続・会話履歴・文字変換。Pico 2：通信の橋渡し。</p>
 
-<SlideFooter :number="21" chapter="04 / LLMクライアントの設計" />
+<SlideFooter :number="22" chapter="04 / LLMクライアントの設計" />
 
 <!--
 伝えること: 機器とソフトウェアの責務を分ける。
 前からのつながり: 入出力をPCで扱い、計算の重い推論はMacへ分ける。
 技術補足: HTTPはホストのloopback POST /api/chat、履歴と正規化もZigホスト。Picoファームウェア変更不要。実機記録はgemma3:1b、最新docのgemma4例と実機モデルを混同しない。
-次への導入: 次は「LLMクライアントの処理」。
+次への導入: 次は「デモ：Gemmaとのチャット」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/src/serial/chat.zig
@@ -583,14 +605,15 @@ layout: video-focus
 
 <MediaAsset asset="gemma" />
 
-<SlideFooter :number="22" chapter="04 / LLMクライアントの設計" />
+<SlideFooter :number="23" chapter="04 / LLMクライアントの設計" />
 
 <!--
 伝えること: このページで初めて完成チャット実機映像を公開する。
-前からのつながり: 構成・処理・メモリ・UIの設計を説明した後で、初めて完成映像の公開へ進む。
-技術補足: 現状は動画未提供。生成映像、疑似チャット、過去UIの画像で代用しない。素材が届いたらconfig/media.jsonのgemmaだけを更新する。新UIなら1743B/B9A6との整合を確認し、映像から見えない終了検証を成功扱いしない。手動再生。PDFでは対応MP4名を示す。
-次への導入: 次は「実装結果と今後の課題」。
+前からのつながり: 接続構成と機器の役割を説明した後、完成した実機映像を初めて公開する。
+技術補足: ユーザー提供の32秒の実機動画をH.264/AAC MP4へ変換。ロードからHELLO!入力、応答表示までを映す。画面上の表示はGEMMA4:E2B。実際のOllama起動引数・撮影版のコードサイズ/CRCは未提供で、過去のgemma3:1bや1743B/B9A6の検証記録と同一視しない。ESC復帰や長時間動作はこの映像から確認したと主張しない。自動再生せず手動再生・停止。PDFでは29秒位置の実フレームとgemma.mp4名を示す。
+次への導入: 次は「PC-8001のチャットUI」で入力・表示の構成を整理する。
 出典:
+- public/videos/gemma.mp4（ユーザー提供の実機動画）
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-classic-014.json
 -->
@@ -628,13 +651,13 @@ layout: default
   </tbody>
 </table>
 
-<SlideFooter :number="23" chapter="04 / LLMクライアントの設計" />
+<SlideFooter :number="24" chapter="04 / LLMクライアントの設計" />
 
 <!--
 伝えること: 完成画面を見せず入力と表示の設計を説明する。
-前からのつながり: メモリ配分の結果として実装した、入力・表示・状態管理の機能を説明する。
-技術補足: PC側でLLM推論を行うのではない。PC側はASCII端末。このページではクライアントの実装要件だけを提示し、完成UIは見せない。旧UI1683B/F1A3は10往復・ESC・HELLO/ABORT・TX解放。新UI1743B/B9A6は5往復の記録時点で継続中、ESC未操作。モデルでの15往復・復帰試験を新UIの物理実測と混同しない。UIそのものの絵やサムネイルはまだ出さない。
-次への導入: 次は「デモ：Gemmaとのチャット」。
+前からのつながり: デモで見た入力・表示・状態管理の機能を、実装の観点で整理する。
+技術補足: PC側でLLM推論を行うのではない。PC側はASCII端末。このページではクライアントの実装要件だけを提示し、完成UIは見せない。旧UI1683B/F1A3は10往復・ESC・HELLO/ABORT・TX解放。新UI1743B/B9A6は5往復の記録時点で継続中、ESC未操作。モデルでの15往復・復帰試験を新UIの物理実測と混同しない。完成映像は前ページだけで示し、ここでは表で機能を整理する。
+次への導入: 次は「できたこと・今後の課題」。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-chat.md
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/docs/pc8001-validation-records/2026-10-27-chat-screen20-014.json
@@ -645,7 +668,7 @@ layout: default
 layout: default
 ---
 
-# 実装結果と今後の課題
+# できたこと・今後の課題
 
 <div class="split">
   <div>
@@ -665,7 +688,7 @@ layout: default
   </div>
 </div>
 
-<SlideFooter :number="24" chapter="05 / デモとまとめ" />
+<SlideFooter :number="25" chapter="05 / デモとまとめ" />
 
 <!--
 伝えること: 実装済みと新UIの未確認範囲を整理する。
@@ -696,13 +719,13 @@ layout: default
   <AppendixLinks />
 </div>
 
-<SlideFooter :number="25" chapter="05 / デモとまとめ" />
+<SlideFooter :number="26" chapter="05 / デモとまとめ" />
 
 <!--
 伝えること: ソースへのリンクで本編を終え質疑用Appendixへ案内する。
 前からのつながり: 結果と課題を踏まえて参照先を示し、本編を終えて質疑へ移る。
 技術補足: リンクはGitHub正本。発表HTMLはリンクを開く操作をしなければネット接続不要。QRコードは未提供で生成しない。
-次への導入: 本編は25で終了。質疑では26–43のAppendixを索引から選ぶ。
+次への導入: 本編は26で終了。質疑では27–44のAppendixを索引から選ぶ。
 出典:
 - https://github.com/moribit/Zig_80/blob/9c38139d018f787902dc4c4785b83ea4b3f14e3d/README.md
 -->

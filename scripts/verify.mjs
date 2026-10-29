@@ -73,16 +73,40 @@ try{
   assert.ok(buffered,'provided footage buffered through the offline seek/play test interval');
   assert.equal(await realVideo.evaluate(v=>v.paused&&!v.autoplay&&v.controls),true);
   const box=await realVideo.boundingBox();
-  const contentHeight=Math.min(box.height,box.width*9/16);
-  const toggle=()=>page.mouse.click(box.x+44,box.y+(box.height+contentHeight)/2-25);
+  const scale=box.width/await realVideo.evaluate(v=>v.clientWidth);
+  const toggle=()=>page.mouse.click(box.x+24*scale,box.y+box.height-48*scale);
   await toggle();await page.waitForTimeout(500);
-  assert.equal(await realVideo.evaluate(v=>!v.paused&&v.currentTime>0),true,'provided footage plays via native control');
+  assert.equal(await realVideo.evaluate(v=>!v.paused&&v.currentTime>0),true,`${key}: provided footage plays via native control`);
   await toggle();assert.equal(await realVideo.evaluate(v=>v.paused),true);
-  await context.setOffline(true);await realVideo.evaluate(v=>{v.currentTime=3});
-  await toggle();await page.waitForTimeout(500);
-  assert.equal(await realVideo.evaluate(v=>!v.paused&&v.currentTime>3),true,'provided footage plays after offline seek');
+  const offlineSeekTime=3;
+  await context.setOffline(true);await realVideo.evaluate((v,t)=>{v.currentTime=t},offlineSeekTime);
+  let seekReady=false;
+  for(let attempt=0;attempt<50&&!seekReady;attempt++){
+   await page.waitForTimeout(100);seekReady=await realVideo.evaluate(v=>!v.seeking&&v.readyState>=2);
+  }
+  assert.ok(seekReady,`${key}: offline seek finished before pressing play`);
+  await toggle();let offlinePlaying=false;
+  for(let attempt=0;attempt<50&&!offlinePlaying;attempt++){
+   await page.waitForTimeout(100);offlinePlaying=await realVideo.evaluate((v,t)=>!v.paused&&v.currentTime>t+.1,offlineSeekTime);
+  }
+  assert.ok(offlinePlaying,`${key}: provided footage plays after offline seek`);
   await toggle();await context.setOffline(false);
-  hardwareMedia[key]={...hardwareMedia[key],playbackVerified:true,manualPlayPause:true,offlineBufferedPlayback:true,offlineSeek:true,duration:await realVideo.evaluate(v=>v.duration)};
+  if(key==='gemma'){
+   // Local HTTP remains available during an offline presentation. Seeking to a
+   // distant GOP may request another byte range even when buffered reports it.
+   // Keep external networking blocked, but allow the local server for this test.
+   await realVideo.evaluate(v=>{v.currentTime=29});
+   let lateSeekReady=false;
+   for(let attempt=0;attempt<50&&!lateSeekReady;attempt++){
+    await page.waitForTimeout(100);lateSeekReady=await realVideo.evaluate(v=>!v.seeking&&v.readyState>=2);
+   }
+   assert.ok(lateSeekReady,'Gemma response frame available from local server');
+   await toggle();await page.waitForTimeout(500);
+   assert.equal(await realVideo.evaluate(v=>!v.paused&&v.currentTime>29),true,'Gemma response plays with external networking blocked');
+   await toggle();
+  }
+  await page.screenshot({path:`artifacts/browser/media-${key}.png`});
+  hardwareMedia[key]={...hardwareMedia[key],playbackVerified:true,manualPlayPause:true,offlineBufferedPlayback:true,offlineSeek:true,offlineSeekTime,...(key==='gemma'?{responseSeekTime:29,localServerResponsePlayback:true}:{}),duration:await realVideo.evaluate(v=>v.duration)};
  }
  // The normal next key must stop at the main ending in both presentation modes.
  for(const prefix of ['', '/presenter']){
@@ -134,5 +158,5 @@ try{
   await review.screenshot({path:`artifacts/chapter-${ch}.png`,fullPage:true});
  }
  assert.deepEqual(external,[],'no external requests');assert.deepEqual(errors,[],'no page errors');assert.deepEqual(consoleErrors,[],'no browser console errors');assert.deepEqual(failures,[],'no failed HTTP');assert.deepEqual(layoutIssues,[],'no canvas/footer/code overflow');assert.deepEqual(contrastIssues,[],'white background and black body text');
- console.log(`PASS: ${deck.count} slides, notes/reveal policy, external network blocked, synthetic and provided MP4 controls/offline playback. Missing Gemma footage remains unverified.`);
+ console.log(`PASS: ${deck.count} slides, notes/reveal policy, external network blocked, synthetic and provided MP4 controls/offline playback.`);
 }finally{await browser?.close();for(const child of servers)child.kill();}
